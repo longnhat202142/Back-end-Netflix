@@ -1,83 +1,80 @@
 const router = require("express").Router();
-const  verify  = require("../verifyToken");
-const List = require("../models/list")
-
-
+const verify = require("../verifyToken");
+const List = require("../models/list");
 
 //Thêm danh sách
-router.post("/",verify, async(req,res) =>{
-
-    if ( req.user.isAdmin ) {
-      const newList = new List(req.body);
-      try {
-        const saveList = await newList.save();
-        res.status(200).json(saveList);
-      } catch (error) {
-        res.status(500).json(error)
-      }
-
-    } else {
-        res.status(403).json("Bạn không được phép!!!")
+router.post("/", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    const newList = new List(req.body);
+    try {
+      const saveList = await newList.save();
+      res.status(200).json(saveList);
+    } catch (error) {
+      res.status(500).json(error);
     }
-   
-})
+  } else {
+    res.status(403).json("Bạn không được phép!!!");
+  }
+});
 
 // Xoá danh sách
-router.delete("/:id" ,verify, async(req,res) =>{
-
-    if ( req.user.isAdmin ) {
-     
-      try {
-        await List.findByIdAndDelete(req.params.id)
-        res.status(200).json("Danh sách đã được xoá !!!");
-      } catch (error) {
-        res.status(500).json(error)
-      }
-
-    } else {
-        res.status(403).json("Bạn không được phép!!!")
+router.delete("/:id", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      await List.findByIdAndDelete(req.params.id);
+      res.status(200).json("Danh sách đã được xoá !!!");
+    } catch (error) {
+      res.status(500).json(error);
     }
-   
-})
+  } else {
+    res.status(403).json("Bạn không được phép!!!");
+  }
+});
 
 // Lấy danh sách
-router.get("/", verify, async(req,res) =>{
-    const typeQuery = req.query.type;
-    const genreQuery = req.query.genre;
-    let list =[];
+router.get("/", verify, async (req, res) => {
+  const typeQuery = req.query.type;
+  const genreQuery = req.query.genre;
+  console.log(typeQuery);
+  console.log(genreQuery);
+  let list = [];
 
-    try {
-        if (typeQuery){
-            if (genreQuery){
-                list = await List.aggregate([
-                    { $sample :{size:10}},
-                    { $match :{type:typeQuery ,genre: genreQuery}},
-                ])
-            }
-
-            else {
-                list = await List.aggregate([
-                    { $sample :{size:10}},
-                    { $match :{type:typeQuery }},
-                ])
-            }
-        }else{
-            list = await List.aggregate([{
-                $sample :{size:10}
-            }])
-        }
-
-    res.status(200).json(list);
-    } catch (error) {
-        res.status(500).json(error)
+  try {
+    if (typeQuery) {
+      if (genreQuery) {
+        list = await List.aggregate([
+          { $sample: { size: 10 } },
+          { $match: { type: typeQuery, genre: genreQuery } },
+        ]);
+      } else {
+        list = await List.aggregate([
+          { $sample: { size: 10 } },
+          { $match: { type: typeQuery } },
+        ]);
+      }
+    } else {
+      list = await List.aggregate([
+        {
+          $sample: { size: 10 },
+        },
+      ]);
     }
 
-   
-   
-})
+    res.status(200).json(list);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const list = await List.findById(id);
+    console.log(list);
+    res.status(200).json(list);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
-
-
-
-module.exports = router
+module.exports = router;

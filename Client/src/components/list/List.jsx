@@ -1,14 +1,10 @@
-import {
-  ArrowBackIosNewOutlined,
-  ArrowForwardIosOutlined,
-} from "@mui/icons-material";
-import "./List.scss";
-import { useRef, useState } from "react";
-import ListItem from "../listItem/ListItem";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination, Navigation } from "swiper/modules";
+import { useRef } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ListItem from "../listItem/ListItem";
+import "./List.scss";
 
 export default function List({ list }) {
   const listRef = useRef(null);
@@ -17,11 +13,11 @@ export default function List({ list }) {
     <div className="list">
       <span className="listTitle">{list.title}</span>
       <div className="wrapper">
-        <Swiper slidesPerView={3}>
+        <Swiper slidesPerView={3} modules={[Navigation]} navigation={true}>
           {list.content.map((item, i) => {
             return (
-              <SwiperSlide>
-                <ListItem key={i} index={i} item={item} />
+              <SwiperSlide key={i}>
+                <ListItem index={i} item={item} />
               </SwiperSlide>
             );
           })}

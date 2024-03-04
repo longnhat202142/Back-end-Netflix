@@ -3,6 +3,7 @@ import "./widgetSm.css";
 import { Visibility } from "@material-ui/icons";
 
 import axios from "axios";
+
 export default function WidgetSm() {
   const [newUser, setNewUsers] = useState([]);
   useEffect(() => {

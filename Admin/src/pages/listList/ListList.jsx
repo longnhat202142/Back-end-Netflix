@@ -2,41 +2,29 @@ import { DeleteOutline } from "@material-ui/icons";
 import { useContext, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
-import { deleteMovies, getMovies } from "../../context/movieContext/apiCalls";
-import { MovieContext } from "../../context/movieContext/movieContext";
-import "./productList.css";
 
-export default function ProductList() {
-  const { movies, dispatch } = useContext(MovieContext);
+import { ListContext } from "../../context/listContext/listContext";
+import "./listList.css";
+import { deleteList, getLists } from "../../context/listContext/apiCalls";
+
+export default function ListList() {
+  const { lists, dispatch } = useContext(ListContext);
 
   useEffect(() => {
-    getMovies(dispatch);
+    getLists(dispatch);
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    deleteMovies(id, dispatch);
+    deleteList(id, dispatch);
   };
 
   //console.log(movies);
   const columns = [
     { field: "_id", headerName: "ID", width: 200 },
-    {
-      field: "movie",
-      headerName: "Tên phim",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.title}
-          </div>
-        );
-      },
-    },
-    { field: "genre", headerName: "Thể loại", width: 150 },
-    { field: "year", headerName: "Năm sản xuất", width: 170 },
-    { field: "limit", headerName: "Độ tuổi", width: 120 },
-    { field: "isSeries", headerName: "Loạt phim", width: 150 },
+
+    { field: "title", headerName: "Tiêu đề", width: 150 },
+    { field: "type", headerName: "Kiểu", width: 170 },
+    { field: "genre", headerName: "Thể loại", width: 200 },
 
     {
       field: "action",
@@ -46,7 +34,7 @@ export default function ProductList() {
         return (
           <>
             <Link
-              to={{ pathname: "/movie/" + params.row._id, movie: params.row }}
+              to={{ pathname: "/lists/" + params.row._id, lists: params.row }}
             >
               <button className="productListEdit">Sửa</button>
             </Link>
@@ -63,7 +51,7 @@ export default function ProductList() {
   return (
     <div className="productList">
       <DataGrid
-        rows={movies}
+        rows={lists}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}

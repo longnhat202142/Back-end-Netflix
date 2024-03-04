@@ -19,12 +19,15 @@ export default function ListItem({ index, item }) {
   useEffect(() => {
     const getMovie = async () => {
       try {
-        const res = await axios.get("/movie/find/" + item, {
-          headers: {
-            token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MDg4NzYwMDN9.5wbBVbCVQIhF5zZUhoi45vDV900Aclarh6MakNdbe8M",
-          },
-        });
+        const res = await axios.get(
+          "/movie/find/" + "65e09c5c58ac68ae36fff73a",
+          {
+            headers: {
+              token:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MDg4NzYwMDN9.5wbBVbCVQIhF5zZUhoi45vDV900Aclarh6MakNdbe8M",
+            },
+          }
+        );
 
         setMovie(res.data);
       } catch (error) {
@@ -46,10 +49,20 @@ export default function ListItem({ index, item }) {
           setIsHovered(false);
         }}
       >
-        {<img src={movie.img} alt="" />}
-        {isHovered && (
+        {movie && <img src={movie.img} alt="" />}
+        {isHovered && movie && (
           <>
-            <iframe src={movie.trailer}></iframe>
+            {/* <iframe src={movie.trailer}></iframe>
+             */}
+            <iframe
+              width="1903"
+              height="750"
+              src="https://www.youtube.com/embed/tsNswx0nRKM"
+              title="React Node.js Netflix App | MERN Stack + JWT Full Tutorial"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
             <div className="itemInfo">
               <div className="icons">
                 <PlayArrow className="icon" />

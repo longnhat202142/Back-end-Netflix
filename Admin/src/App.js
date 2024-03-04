@@ -13,7 +13,8 @@ import Login from "./pages/login/Login";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext/authContext";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
-
+import ListList from "./pages/listList/ListList";
+import List from "./pages/list/List";
 function App() {
   const { user } = useContext(AuthContext);
 
@@ -29,6 +30,8 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
+
+              {/* Phần người dùng */}
               <Route path="/users">
                 <UserList />
               </Route>
@@ -38,13 +41,26 @@ function App() {
               <Route path="/newUser">
                 <NewUser />
               </Route>
+
+              {/* phần PHIM */}
               <Route path="/movies">
                 <ProductList />
               </Route>
-              <Route path="/product/:productId">
+              <Route path="/movie/:movieId">
                 <Product />
               </Route>
-              <Route path="/newproduct">
+              <Route path="/newmovie">
+                <NewProduct />
+              </Route>
+
+              {/* DANH SÁCH */}
+              <Route path="/lists" exact>
+                <ListList />
+              </Route>
+              <Route path="/lists/:id">
+                <List />
+              </Route>
+              <Route path="/newlist">
                 <NewProduct />
               </Route>
             </div>

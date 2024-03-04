@@ -1,5 +1,11 @@
+import { List } from "@material-ui/core";
 import "./sidebar.css";
-import { LineStyle, PermIdentity, PlayCircleOutline } from "@material-ui/icons";
+import {
+  LineStyle,
+  ListAltOutlined,
+  PermIdentity,
+  PlayCircleOutline,
+} from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -25,6 +31,13 @@ export default function Sidebar() {
               <li className="sidebarListItem">
                 <PlayCircleOutline className="sidebarIcon" />
                 Phim
+              </li>
+            </Link>
+
+            <Link to="/lists" className="link">
+              <li className="sidebarListItem">
+                <ListAltOutlined className="sidebarIcon" />
+                Danh sách
               </li>
             </Link>
           </ul>
