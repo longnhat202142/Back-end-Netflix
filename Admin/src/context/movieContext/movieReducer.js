@@ -59,7 +59,7 @@ const MovieReducer = (state, action) => {
         error: true,
       };
 
-    // TRẠNG THÁI SỬA
+    // TRẠNG THÁI CẬP NH
     case "UPLOAD_MOVIE_START":
       return {
         ...state,

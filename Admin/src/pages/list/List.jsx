@@ -1,29 +1,34 @@
 import { useContext, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom/cjs/react-router-dom";
-import { getListbyId } from "../../context/listContext/apiCalls";
+import { Link, useParams } from "react-router-dom";
+import { getListbyId, updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
+import { useHistory } from "react-router-dom";
 import "./list.css";
-import { Link } from "@material-ui/core";
+//import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 export default function List() {
-  const location = useLocation();
+  // const location = useLocation();
   // const list = location.lists;
-  // console.log(list);
 
   const { id } = useParams();
 
   const { lists, dispatch } = useContext(ListContext);
   const list = lists;
-
+  const history = useHistory();
   useEffect(() => {
     getListbyId(id, dispatch);
-  }, [dispatch]);
+  }, [dispatch, id]);
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    updateList(list, dispatch);
+    history.push("/lists");
+  };
   return (
     <div className="product">
       <div className="productTitleContainer">
         <h1 className="productTitle">Danh sách</h1>
-        <Link to="/newList">
+        <Link to="/newList" style={{ display: "inline-block" }}>
           <button className="productAddButton">Thêm danh sách</button>
         </Link>
       </div>
@@ -54,14 +59,13 @@ export default function List() {
           <div className="productFormLeft">
             <label>Tiêu đề </label>
             <input type="text" placeholder={list.title} />
-
             <label>Thể loại</label>
             <input type="text" placeholder={list.genre} />
             <label>Kiểu</label>
             <input type="text" placeholder={list.type} />
-          </div>
-          <div className="productFormRight">
-            <button className="productButton">Cập nhật</button>
+            <button className="productButton" onClick={handleUpdate}>
+              Cập nhật
+            </button>
           </div>
         </form>
       </div>

@@ -3,11 +3,12 @@ import "./newProduct.css";
 import { createMovies } from "../../context/movieContext/apiCalls";
 
 import { MovieContext } from "../../context/movieContext/movieContext";
+import { useHistory } from "react-router-dom";
 export default function NewProduct() {
   const [movie, setMovie] = useState(null);
 
   const { dispatch } = useContext(MovieContext);
-
+  const history = useHistory();
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
@@ -16,6 +17,7 @@ export default function NewProduct() {
   const handleSubmit = (e) => {
     e.preventDefault();
     createMovies(movie, dispatch);
+    history.push("/movies");
   };
   return (
     <div className="newProduct">

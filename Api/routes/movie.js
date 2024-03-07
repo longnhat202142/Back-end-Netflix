@@ -22,7 +22,7 @@ router.post("/", verify, async (req, res) => {
 router.put("/:id", verify, async (req, res) => {
   if (req.user.isAdmin) {
     try {
-      const updatedMovie = await Movie.findOneAndUpdate(
+      const updatedMovie = await Movie.findByIdAndUpdate(
         req.params.id,
         {
           $set: req.body,

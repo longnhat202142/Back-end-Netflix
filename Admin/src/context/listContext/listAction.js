@@ -1,3 +1,4 @@
+// Trạng thái xem
 export const getListsStart = () => ({
   type: "GET_LISTS_START",
 });
@@ -10,6 +11,8 @@ export const getListsSuccess = (lists) => ({
 export const getListsFailure = () => ({
   type: "GET_LISTS_FAILURE",
 });
+
+// Upload lại trang
 export const getListStart = () => ({
   type: "GET_LITS_START",
 });
@@ -37,30 +40,30 @@ export const deleteListFailure = () => ({
   type: "DELETE_LIST_FAILURE",
 });
 
-// // Trạng thái thêm phim
-// export const createMoviesStart = () => ({
-//   type: "CREATE_MOVIE_START",
-// });
+// Trạng thái thêm danh sach
+export const createListStart = () => ({
+  type: "CREATE_LIST_START",
+});
 
-// export const createMoviesSuccess = (movie) => ({
-//   type: "CREATE_MOVIE_SUCCESS",
-//   payload: movie,
-// });
+export const createListSuccess = (list) => ({
+  type: "CREATE_LIST_SUCCESS",
+  payload: list,
+});
 
-// export const createMoviesFailure = () => ({
-//   type: "upload_MOVIE_FAILURE",
-// });
+export const createListFailure = () => ({
+  type: "CREATE_LIST_FAILURE",
+});
 
-// //Cập nhật phim
-// export const uploadMovieStart = () => ({
-//   type: "UPLOAD_MOVIE_START",
-// });
+//Cập nhật phim
+export const uploadListStart = () => ({
+  type: "UPLOAD_LIST_START",
+});
 
-// export const uploadMovieSuccess = (movie) => ({
-//   type: "UPLOAD_MOVIE_SUCCESS",
-//   payload: movie,
-// });
+export const uploadListSuccess = (lists) => ({
+  type: "UPLOAD_LIST_SUCCESS",
+  payload: lists,
+});
 
-// export const uploadMovieFailure = () => ({
-//   type: "UPLOAD_MOVIE_FAILURE",
-// });
+export const uploadListFailure = () => ({
+  type: "UPLOAD_LIST_FAILURE",
+});

@@ -1,5 +1,3 @@
-import { List } from "@material-ui/core";
-import "./sidebar.css";
 import {
   LineStyle,
   ListAltOutlined,
@@ -7,6 +5,7 @@ import {
   PlayCircleOutline,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import "./sidebar.css";
 
 export default function Sidebar() {
   return (

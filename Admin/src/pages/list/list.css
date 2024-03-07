@@ -48,10 +48,12 @@
 .productInfoTop {
   display: flex;
   align-items: center;
+  
 }
 
 .productName {
   font-weight: 600;
+  margin-left: 50px;
 }
 
 .productInfoBottom {
@@ -130,4 +132,5 @@
   color:white;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 10px;
 }

@@ -9,7 +9,12 @@ import {
   getMoviesFailure,
   getMoviesStart,
   getMoviesSuccess,
+  uploadMovieFailure,
+  uploadMovieStart,
+  uploadMovieSuccess,
 } from "./movieAction";
+
+// xem
 export const getMovies = async (dispatch) => {
   dispatch(getMoviesStart());
   try {
@@ -52,5 +57,26 @@ export const createMovies = async (movie, dispatch) => {
     dispatch(createMoviesSuccess(res.data));
   } catch (error) {
     dispatch(createMoviesFailure());
+  }
+};
+
+// Cập nhật
+export const updateMovies = async (movie, dispatch) => {
+  dispatch(uploadMovieStart());
+  try {
+    const res = await axios.put(
+      "http://localhost:8800/api/movie/" + movie._id,
+      movie,
+      {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
+    dispatch(uploadMovieSuccess(res.data));
+    console.log(uploadMovieSuccess(res.data));
+  } catch (error) {
+    dispatch(uploadMovieFailure());
   }
 };

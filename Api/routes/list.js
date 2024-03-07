@@ -35,27 +35,25 @@ router.delete("/:id", verify, async (req, res) => {
 router.get("/", verify, async (req, res) => {
   const typeQuery = req.query.type;
   const genreQuery = req.query.genre;
-  console.log(typeQuery);
-  console.log(genreQuery);
   let list = [];
 
   try {
     if (typeQuery) {
       if (genreQuery) {
         list = await List.aggregate([
-          { $sample: { size: 10 } },
+          { $sample: { size: 8 } },
           { $match: { type: typeQuery, genre: genreQuery } },
         ]);
       } else {
         list = await List.aggregate([
-          { $sample: { size: 10 } },
+          { $sample: { size: 8 } },
           { $match: { type: typeQuery } },
         ]);
       }
     } else {
       list = await List.aggregate([
         {
-          $sample: { size: 10 },
+          $sample: { size: 8 },
         },
       ]);
     }
@@ -66,14 +64,42 @@ router.get("/", verify, async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+// Xem thông tin để Upload lại trang
+router.get("/:id", verify, async (req, res) => {
   const id = req.params.id;
-  try {
-    const list = await List.findById(id);
-    console.log(list);
-    res.status(200).json(list);
-  } catch (error) {
-    res.status(500).json(error);
+  if (req.user.isAdmin) {
+    try {
+      const list = await List.findById(id);
+
+      res.status(200).json(list);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.status(403).json("Bạn không được phép!!!");
+  }
+});
+
+// Cập nhật lại danh sách
+router.put("/:id", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const updateList = await List.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        {
+          new: true,
+        }
+      );
+
+      res.status(200).json(updateList);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.status(403).json("Bạn không được phép sửa !!!");
   }
 });
 

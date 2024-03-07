@@ -1,11 +1,10 @@
+import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { useContext, useEffect } from "react";
-import { DataGrid } from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
-
+import { deleteList, getLists } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import "./listList.css";
-import { deleteList, getLists } from "../../context/listContext/apiCalls";
 
 export default function ListList() {
   const { lists, dispatch } = useContext(ListContext);
@@ -33,9 +32,7 @@ export default function ListList() {
       renderCell: (params) => {
         return (
           <>
-            <Link
-              to={{ pathname: "/lists/" + params.row._id, lists: params.row }}
-            >
+            <Link to={{ pathname: "/lists/" + params.row._id }}>
               <button className="productListEdit">Sửa</button>
             </Link>
             <DeleteOutline
@@ -55,6 +52,7 @@ export default function ListList() {
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
+        rowsPerPageOptions={[8]}
         checkboxSelection
         getRowId={(row) => row._id}
       />

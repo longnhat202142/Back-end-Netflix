@@ -1,5 +1,6 @@
 const ListsReducer = (state, action) => {
   switch (action.type) {
+    // Trạng thái xem
     case "GET_LISTS_START":
       return {
         lists: [],
@@ -18,6 +19,8 @@ const ListsReducer = (state, action) => {
         isFetching: false,
         error: true,
       };
+
+    // Trạng thái upload lại trang
     case "GET_LIST_START":
       return {
         lists: [],
@@ -36,6 +39,28 @@ const ListsReducer = (state, action) => {
         isFetching: false,
         error: true,
       };
+
+    // Trạng thái thêm
+    case "CREATE_LIST_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "CREATE_LIST_SUCCESS":
+      return {
+        lists: [...state.lists, action.payload],
+        isFetching: false,
+        error: false,
+      };
+    case "CREATE_LIST_FAILURE":
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
+
+    // Trạng thái xoá
     case "DELETE_LIST_START":
       return {
         ...state,
@@ -55,6 +80,27 @@ const ListsReducer = (state, action) => {
         error: true,
       };
 
+    // Trạng thái cập nhật
+    case "UPLOAD_LIST_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "UPLOAD_LIST_SUCCESS":
+      return {
+        lists: state.lists.map(
+          (list) => list._id === action.payload._id && action.payload
+        ),
+        isFetching: false,
+        error: false,
+      };
+    case "UPLOAD_LIST_FAILURE":
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
     default:
       return { ...state };
   }
