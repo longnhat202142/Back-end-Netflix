@@ -6,9 +6,9 @@ import {
   deleteListFailure,
   deleteListStart,
   deleteListSuccess,
-  getListFailure,
-  getListStart,
-  getListSuccess,
+  // getListFailure,
+  // getListStart,
+  // getListSuccess,
   getListsFailure,
   getListsStart,
   getListsSuccess,
@@ -30,19 +30,19 @@ export const getLists = async (dispatch) => {
   }
 };
 
-export const getListbyId = async (id, dispatch) => {
-  dispatch(getListStart());
-  try {
-    const res = await axios.get("http://localhost:8800/api/list/" + id, {
-      headers: {
-        token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-      },
-    });
-    dispatch(getListSuccess(res.data));
-  } catch (error) {
-    dispatch(getListFailure());
-  }
-};
+// export const getListbyId = async (id, dispatch) => {
+//   dispatch(getListStart());
+//   try {
+//     const res = await axios.get("http://localhost:8800/api/list/" + id, {
+//       headers: {
+//         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+//       },
+//     });
+//     dispatch(getListSuccess(res.data));
+//   } catch (error) {
+//     dispatch(getListFailure());
+//   }
+// };
 
 // Xoá
 export const deleteList = async (id, dispatch) => {

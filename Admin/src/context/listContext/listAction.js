@@ -13,18 +13,18 @@ export const getListsFailure = () => ({
 });
 
 // Upload lại trang
-export const getListStart = () => ({
-  type: "GET_LITS_START",
-});
+// export const getListStart = () => ({
+//   type: "GET_LITS_START",
+// });
 
-export const getListSuccess = (lists) => ({
-  type: "GET_LIST_SUCCESS",
-  payload: lists,
-});
+// export const getListSuccess = (lists) => ({
+//   type: "GET_LIST_SUCCESS",
+//   payload: lists,
+// });
 
-export const getListFailure = () => ({
-  type: "GET_LIST_FAILURE",
-});
+// export const getListFailure = () => ({
+//   type: "GET_LIST_FAILURE",
+// });
 
 // Trạng thái xoá
 export const deleteListStart = () => ({

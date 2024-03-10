@@ -5,7 +5,6 @@ const Movie = require("../models/movie");
 //Thêm phim
 router.post("/", verify, async (req, res) => {
   if (req.user.isAdmin) {
-    console.log(req.body);
     const newMovie = new Movie(req.body);
     try {
       const savedMovie = await newMovie.save();

@@ -1,24 +1,22 @@
 import { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getListbyId, updateList } from "../../context/listContext/apiCalls";
+import { Link } from "react-router-dom";
+import { updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import { useHistory } from "react-router-dom";
 import "./list.css";
-//import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 export default function List() {
-  // const location = useLocation();
-  // const list = location.lists;
-
-  const { id } = useParams();
-
-  const { lists, dispatch } = useContext(ListContext);
-  const list = lists;
+  const location = useLocation();
+  const list = location.list;
   const history = useHistory();
-  useEffect(() => {
-    getListbyId(id, dispatch);
-  }, [dispatch, id]);
+  const { dispatch } = useContext(ListContext);
 
+  // const history = useHistory();
+  // useEffect(() => {
+  //   getLists(dispatch);
+  // }, [dispatch]);
+  console.log(list);
   const handleUpdate = (e) => {
     e.preventDefault();
     updateList(list, dispatch);

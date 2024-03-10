@@ -24,8 +24,9 @@ export default function Product() {
   const handleUpdateMovie = (e) => {
     e.preventDefault();
     updateMovies(update, dispatch);
+    history.push("/movies");
+    console.log(update);
   };
-  //history.push("/movies");
 
   return (
     <div className="product">
@@ -84,6 +85,7 @@ export default function Product() {
               type="text"
               placeholder={movie.genre}
               onChange={handleChange}
+              name="genre"
             />
             <label>Độ tuổi</label>
             <input
