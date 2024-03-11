@@ -1,13 +1,13 @@
-import { useRef } from "react";
+// import { useRef } from "react";
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ListItem from "../listItem/ListItem";
 import "./List.scss";
 
 export default function List({ list }) {
-  const listRef = useRef(null);
+  //const listRef = useRef(null);
 
   return (
     <div className="list">

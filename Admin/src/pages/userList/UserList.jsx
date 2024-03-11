@@ -1,11 +1,10 @@
-import "./userList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../context/userContext/userContext";
 import { getUsers } from "../../context/userContext/apiCalls";
+import { UserContext } from "../../context/userContext/userContext";
+import "./userList.css";
 
 export default function UserList() {
   const { users, dispatch } = useContext(UserContext);

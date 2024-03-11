@@ -14,7 +14,7 @@ export default function Featured({ type }) {
           {
             headers: {
               token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDZmNjZhOWRlYzZjZDZlODdiZWE3YSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwODc0NDY3Mn0.NaTJiJxES9su0lvjGVuCYqPAJoqeHU5PT25IRcYFOTs",
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxMDEyNjY0NH0.gMYhwfh4xUT-DW2ZRbilF1LBSMDLSAQfc2qn_tTwchY",
             },
           }
         );
@@ -27,7 +27,6 @@ export default function Featured({ type }) {
     getRandomContent();
   }, [type]);
 
-  console.log(content);
   return (
     <div className="featured">
       {type && (

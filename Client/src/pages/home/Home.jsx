@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import Featured from "../../components/featured/Featured";
-import List from "../../components/list/List";
 import Navbar from "../../components/navbar/Navbar";
-import axios from "axios";
+import Featured from "../../components/featured/Featured";
 import "./Home.scss";
+import List from "../../components/list/List";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-//import {AcUnit} from "@mui/icons-material"
 const Home = ({ type }) => {
   const [lists, setLists] = useState([]);
   const [genre, setGenre] = useState(null);
@@ -14,18 +13,20 @@ const Home = ({ type }) => {
     const getRandomLists = async () => {
       try {
         const res = await axios.get(
-          `list${type ? "?type=" + type : ""}
-        ${genre ? "&genre=" + genre : ""}`,
+          `http://localhost:8800/api/list/${type ? "?type=" + type : ""}${
+            genre ? "&genre=" + genre : ""
+          }`,
           {
             headers: {
               token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDZmNjZhOWRlYzZjZDZlODdiZWE3YSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwODc0NDY3Mn0.NaTJiJxES9su0lvjGVuCYqPAJoqeHU5PT25IRcYFOTs",
+                "Bearer " +
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxMDEyNjY0NH0.gMYhwfh4xUT-DW2ZRbilF1LBSMDLSAQfc2qn_tTwchY",
             },
           }
         );
         setLists(res.data);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     };
     getRandomLists();
@@ -34,8 +35,7 @@ const Home = ({ type }) => {
   return (
     <div className="home">
       <Navbar />
-
-      <Featured type={type} />
+      <Featured type={type} setGenre={setGenre} />
       {lists && lists.map((list) => <List key={list._id} list={list} />)}
     </div>
   );

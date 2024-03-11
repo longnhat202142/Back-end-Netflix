@@ -1,24 +1,23 @@
-import { Link } from "react-router-dom";
 import { Publish } from "@material-ui/icons";
+import { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { updateMovies } from "../../context/movieContext/apiCalls";
-import { useContext, useState } from "react";
 import { MovieContext } from "../../context/movieContext/movieContext";
-import { useHistory } from "react-router-dom";
 
 import "./product.css";
 export default function Product() {
-  const [update, setUpdate] = useState(null);
   const location = useLocation();
   const movie = location.movie;
   const history = useHistory();
+  const [update, setUpdate] = useState(movie);
 
   const { dispatch } = useContext(MovieContext);
 
   const handleChange = (e) => {
     const value = e.target.value;
 
-    setUpdate({ ...movie, [e.target.name]: value });
+    setUpdate({ ...update, [e.target.name]: value });
   };
 
   const handleUpdateMovie = (e) => {

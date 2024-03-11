@@ -5,11 +5,10 @@ import Register from "./pages/Register/Register";
 import Login from "./pages/login/Login";
 
 import {
- 
   Route,
   BrowserRouter as Router,
   Routes,
-  Navigate
+  Navigate,
 } from "react-router-dom";
 
 const App = () => {
@@ -20,24 +19,29 @@ const App = () => {
         {/* Exact chỉ định rằng route chỉ khớp 
         nếu đường dẫn URL trùng khớp chính xác 
         với đường dẫn được chỉ định*/}
-        <Route exact path="/" element={user ? <Home /> : <Navigate to="/register"/>} />
-        <Route  path="/register" element={!user ? <Register /> : <Navigate to="/"/>} />
+        <Route
+          exact
+          path="/"
+          element={user ? <Home /> : <Navigate to="/register" />}
+        />
+        <Route
+          path="/register"
+          element={!user ? <Register /> : <Navigate to="/" />}
+        />
 
-        <Route  path="/login" element={!user ? <Login/> : <Navigate to="/"/>} />
-          {
-            user && (
-              <>
-              <Route path="/movies" element={<Home type="movies" />} />
-              <Route path="/series" element={<Home type="series" />} />
-              <Route path="/watch" element={<Watch/>} />
-              </>
-            )
-          }
-
+        <Route
+          path="/login"
+          element={!user ? <Login /> : <Navigate to="/" />}
+        />
+        {user && (
+          <>
+            <Route path="/movies" element={<Home type="movies" />} />
+            <Route path="/series" element={<Home type="series" />} />
+            <Route path="/watch" element={<Watch />} />
+          </>
+        )}
       </Routes>
     </Router>
   );
 };
 export default App;
-
-

@@ -1,10 +1,9 @@
-import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
-import { useHistory } from "react-router-dom";
 import "./list.css";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 export default function List() {
   const location = useLocation();
