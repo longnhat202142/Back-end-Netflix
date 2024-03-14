@@ -1,3 +1,4 @@
+@import "../../app.scss";
 
 *{
     box-sizing: border-box;
@@ -31,11 +32,23 @@
                 height: 50px;
                 padding: 0;
                 background-color: var(--main-color);
+                @include mobile{
+                    display: none;
+                }
             
             }
             span{
                 margin-right: 20px;
                 cursor: pointer;
+
+                @include tablet{
+                    display: none;
+                }
+                &.navarLinks{
+                    @include tablet{
+                        display: block;
+                    }
+                }
             }
         }
         

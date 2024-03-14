@@ -100,4 +100,19 @@ router.get("/", verify, async (req, res) => {
   }
 });
 
+router.get("/find", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const search = req.query.search;
+      const movies = await Movie.find();
+      const filteredMovies = movies.filter((movie) =>
+        movie.title.includes(search)
+      );
+      res.status(200).json(filteredMovies);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+});
+
 module.exports = router;

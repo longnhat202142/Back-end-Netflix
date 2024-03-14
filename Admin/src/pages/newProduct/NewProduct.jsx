@@ -6,7 +6,9 @@ import { MovieContext } from "../../context/movieContext/movieContext";
 import { useHistory } from "react-router-dom";
 export default function NewProduct() {
   const [movie, setMovie] = useState(null);
-
+  const [img, setImg] = useState(null);
+  const [imgTitle, setImgTitle] = useState(null);
+  const [imgSm, setimgSm] = useState(null);
   const { dispatch } = useContext(MovieContext);
   const history = useHistory();
   const handleChange = (e) => {
@@ -25,7 +27,12 @@ export default function NewProduct() {
       <form className="addProductForm">
         <div className="addProductItem">
           <label>Ảnh</label>
-          <input type="text" id="img" name="img" onChange={handleChange} />
+          <input
+            type="text"
+            id="img"
+            name="img"
+            onChange={(e) => setImg(e.target.files[0])}
+          />
         </div>
         <div className="addProductItem">
           <label>Ảnh tiêu đề</label>
@@ -33,7 +40,7 @@ export default function NewProduct() {
             type="text"
             id="imgTitle"
             name="imgTitle"
-            onChange={handleChange}
+            onChange={(e) => setImgTitle(e.target.files[0])}
           />
         </div>
         <div className="addProductItem">

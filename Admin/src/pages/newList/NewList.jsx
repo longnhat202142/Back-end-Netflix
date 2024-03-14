@@ -54,7 +54,7 @@ export default function NewList() {
           />
 
           <label>Kiểu</label>
-          <select value="type" onChange={handleChange}>
+          <select value="type" onChange={handleChange} name="type">
             <option>-- Chọn kiểu --</option>
             <option value="movie">Phim</option>
             <option value="series">Series</option>

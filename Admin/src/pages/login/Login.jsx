@@ -1,16 +1,20 @@
 import React, { useContext, useState } from "react";
-import "./Login.css";
-import { AuthContext } from "../../context/authContext/authContext";
+import { useHistory } from "react-router-dom";
 import { login } from "../../context/authContext/apiCalls";
+import { AuthContext } from "../../context/authContext/authContext";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isFetching, dispatch } = useContext(AuthContext);
+  const { isFetching, dispatch, user } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleLogin = (e) => {
-    e.preventDefault();
     login({ email, password }, dispatch);
+    if (user) {
+      console.log(user);
+    }
   };
 
   return (
@@ -20,12 +24,14 @@ export default function Login() {
           type="text"
           placeholder="email"
           className="loginInput"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Mật khẩu"
           className="loginInput"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <button

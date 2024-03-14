@@ -1,11 +1,17 @@
-import "./Navbar.scss";
 import { ArrowDropDown, Search } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { logout } from "../../authContext/AuthActions";
+import { AuthContext } from "../../authContext/AuthContext";
+import "./Navbar.scss";
+
 const Navbar = () => {
-  // Kiểm tra xem có thanh chuột không ?
+  const { dispatch } = useContext(AuthContext);
+
+  // Kiểm tra xem có thanh chuột không
   const [isScrolled, setIsScrolled] = useState(false);
+
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
@@ -23,13 +29,12 @@ const Navbar = () => {
             <span>Trang chủ</span>
           </Link>
 
-          <Link to="/series" className="link">
-            <span>Chủ đề</span>
-          </Link>
           <Link to="/movies" className="link">
-            <span>Phim</span>
+            <span className="navarLinks">Phim</span>
           </Link>
-
+          <Link to="/series" className="link">
+            <span className="navarLinks">Series</span>
+          </Link>
           <span>Đề xuất</span>
           <span>Danh sách</span>
         </div>
@@ -46,7 +51,7 @@ const Navbar = () => {
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>Cài đặt</span>
-              <span>Đăng xuất</span>
+              <span onClick={() => dispatch(logout())}>Đăng xuất</span>
             </div>
           </div>
         </div>

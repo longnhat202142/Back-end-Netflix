@@ -5,7 +5,7 @@ export const login = async (user, dispatch) => {
   try {
     const res = await axios.post("http://localhost:8800/api/auth/login", user);
 
-    if (res.data.isAdmin) {
+    if (res.data.info.isAdmin) {
       dispatch(loginSuccess(res.data));
     }
   } catch (error) {
