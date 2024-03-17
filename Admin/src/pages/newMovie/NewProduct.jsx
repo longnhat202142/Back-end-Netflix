@@ -1,14 +1,17 @@
 import { useContext, useState } from "react";
-import "./newProduct.css";
-import { createMovies } from "../../context/movieContext/apiCalls";
-
-import { MovieContext } from "../../context/movieContext/movieContext";
 import { useHistory } from "react-router-dom";
+import { createMovies } from "../../context/movieContext/apiCalls";
+import { MovieContext } from "../../context/movieContext/movieContext";
+import storage from "../../firebase.js";
+import "./newProduct.css";
+
 export default function NewProduct() {
   const [movie, setMovie] = useState(null);
   const [img, setImg] = useState(null);
   const [imgTitle, setImgTitle] = useState(null);
-  const [imgSm, setimgSm] = useState(null);
+  const [imgSm, setImgSm] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
+
   const { dispatch } = useContext(MovieContext);
   const history = useHistory();
   const handleChange = (e) => {
@@ -21,6 +24,42 @@ export default function NewProduct() {
     createMovies(movie, dispatch);
     history.push("/movies");
   };
+
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = new Date().getTime() + item.label + item.file.name;
+      const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+      uploadTask.on(
+        "state_change",
+        (snaphot) => {
+          const progress =
+            (snaphot.bytesTransferred / snaphot.totalBytes) * 100;
+          console.log("Upload " + progress + "  % doen");
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+            setMovie((prev) => {
+              return { ...prev, [item.label]: url };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
+    });
+  };
+  const handleUpload = (e) => {
+    e.preventDefault();
+    upload([
+      { file: img, label: "img" },
+      { file: imgTitle, label: "imgTitle" },
+      { file: imgSm, label: "imgSm" },
+    ]);
+  };
+
+  console.log(movie);
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">Phim mới</h1>
@@ -28,7 +67,7 @@ export default function NewProduct() {
         <div className="addProductItem">
           <label>Ảnh</label>
           <input
-            type="text"
+            type="file"
             id="img"
             name="img"
             onChange={(e) => setImg(e.target.files[0])}
@@ -37,7 +76,7 @@ export default function NewProduct() {
         <div className="addProductItem">
           <label>Ảnh tiêu đề</label>
           <input
-            type="text"
+            type="file"
             id="imgTitle"
             name="imgTitle"
             onChange={(e) => setImgTitle(e.target.files[0])}
@@ -45,7 +84,12 @@ export default function NewProduct() {
         </div>
         <div className="addProductItem">
           <label>Hình ảnh thu nhỏ</label>
-          <input type="text" id="imgSm" name="imgSm" onChange={handleChange} />
+          <input
+            type="file"
+            id="imgSm"
+            name="imgSm"
+            onChange={(e) => setImgSm(e.target.files[0])}
+          />
         </div>
 
         <div className="addProductItem">
@@ -112,9 +156,15 @@ export default function NewProduct() {
           <label>Video</label>
           <input type="text" name="video" onChange={handleChange} />
         </div>
-        <button className="addProductButton" onClick={handleSubmit}>
-          Thêm
-        </button>
+        {uploaded === 3 ? (
+          <button className="addProductButton" onClick={handleSubmit}>
+            Thêm
+          </button>
+        ) : (
+          <button className="addProductButton" onClick={handleUpload}>
+            Upload
+          </button>
+        )}
       </form>
     </div>
   );

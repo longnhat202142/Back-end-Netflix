@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { login } from "../../context/authContext/apiCalls";
 import { AuthContext } from "../../context/authContext/authContext";
 import "./Login.css";
@@ -8,7 +7,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isFetching, dispatch, user } = useContext(AuthContext);
-  const history = useHistory();
 
   const handleLogin = (e) => {
     login({ email, password }, dispatch);

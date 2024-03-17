@@ -14,10 +14,10 @@ import List from "./pages/list/List";
 import ListList from "./pages/listList/ListList";
 import Login from "./pages/login/Login";
 import NewList from "./pages/newList/NewList";
-import NewProduct from "./pages/newProduct/NewProduct";
+import NewProduct from "./pages/newMovie/NewProduct";
 import NewUser from "./pages/newUser/NewUser";
-import Product from "./pages/product/Product";
-import ProductList from "./pages/productList/ProductList";
+import Product from "./pages/movie/Product";
+import ProductList from "./pages/movieList/ProductList";
 import User from "./pages/user/User";
 import UserList from "./pages/userList/UserList";
 function App() {
