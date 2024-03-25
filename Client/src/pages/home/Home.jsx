@@ -1,33 +1,19 @@
-import Navbar from "../../components/navbar/Navbar";
+import { useContext, useEffect, useState } from "react";
 import Featured from "../../components/featured/Featured";
-import "./Home.scss";
 import List from "../../components/list/List";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import Navbar from "../../components/navbar/Navbar";
+import { getMoviesRandom } from "../../movieContext/apiCalls";
+import { MovieContext } from "../../movieContext/movieContext";
+import "./Home.scss";
 
 const Home = ({ type }) => {
-  const [lists, setLists] = useState([]);
+  // const [lists, setLists] = useState([]);
+  const { movies, dispatch, isFind } = useContext(MovieContext);
   const [genre, setGenre] = useState(null);
 
   useEffect(() => {
     const getRandomLists = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/api/list/${type ? "?type=" + type : ""}${
-            genre ? "&genre=" + genre : ""
-          }`,
-          {
-            headers: {
-              token:
-                "Bearer " +
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxMDEyNjY0NH0.gMYhwfh4xUT-DW2ZRbilF1LBSMDLSAQfc2qn_tTwchY",
-            },
-          }
-        );
-        setLists(res.data);
-      } catch (err) {
-        console.log(err);
-      }
+      await getMoviesRandom(type, genre, dispatch);
     };
     getRandomLists();
   }, [type, genre]);
@@ -36,7 +22,11 @@ const Home = ({ type }) => {
     <div className="home">
       <Navbar />
       <Featured type={type} setGenre={setGenre} />
-      {lists && lists.map((list) => <List key={list._id} list={list} />)}
+      {isFind ? (
+        <List list={movies}></List>
+      ) : (
+        movies && movies.map((list) => <List key={list._id} list={list} />)
+      )}
     </div>
   );
 };

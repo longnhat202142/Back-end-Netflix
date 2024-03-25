@@ -4,10 +4,15 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../authContext/AuthActions";
 import { AuthContext } from "../../authContext/AuthContext";
+import { MovieContext } from "../../movieContext/movieContext";
 import "./Navbar.scss";
+import { getMoviesRandom, searchMoviesApi } from "../../movieContext/apiCalls";
+// import { findMoviesSuccess } from "../../movieContext/movieAction";
 
 const Navbar = () => {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatchau } = useContext(AuthContext);
+  const { dispatch } = useContext(MovieContext);
+  const [searchMovie, setSearchMovie] = useState("");
 
   // Kiểm tra xem có thanh chuột không
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,6 +20,25 @@ const Navbar = () => {
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
+  };
+
+  // useEffect(() => {
+  //   const findMovies = async () => await searchMoviesApi(searchMovie, dispatch);
+
+  //   if (searchMovie) findMovies();
+  // }, [searchMovie]);
+
+  // Tìm kiếm phim
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchMovie(value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchMovie) searchMoviesApi(searchMovie, dispatch);
+    else getMoviesRandom(null, null, dispatch);
   };
 
   return (
@@ -39,7 +63,18 @@ const Navbar = () => {
           <span>Danh sách</span>
         </div>
         <div className="right">
-          <Search className="icon" />
+          <div className="searchmovie">
+            <input
+              type="text"
+              placeholder="Tìm kiếm phim"
+              className="searchmovie_Input"
+              spellCheck={false}
+              onChange={handleChange}
+            />
+
+            <Search className="icon" onClick={handleSearch} />
+          </div>
+
           <span>Trẻ em</span>
           <NotificationsIcon className="icon" />
           <img
@@ -51,7 +86,7 @@ const Navbar = () => {
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>Cài đặt</span>
-              <span onClick={() => dispatch(logout())}>Đăng xuất</span>
+              <span onClick={() => dispatchau(logout())}>Đăng xuất</span>
             </div>
           </div>
         </div>

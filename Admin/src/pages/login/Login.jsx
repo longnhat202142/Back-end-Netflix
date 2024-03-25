@@ -11,13 +11,26 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { isFetching, dispatch } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
-    login({ email, password }, dispatch);
+  const [loginError, setLoginError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setLoginError("Vui lòng điền đầy đủ thông tin.");
+      return;
+    }
+
+    const res = await login({ email, password }, dispatch);
+    if (res) {
+      setLoginError(res);
+    }
   };
+
   const [showPass, setShowPass] = useState(false);
   const togglePass = () => {
     setShowPass(!showPass);
   };
+
   return (
     <div className="wrapper">
       <form className="form-login">
@@ -45,6 +58,7 @@ export default function Login() {
             <VisibilityOutlinedIcon onClick={togglePass} />
           </div>
         </div>
+        {loginError && <div className="error">{loginError}</div>}
 
         <button
           className="form-submit"

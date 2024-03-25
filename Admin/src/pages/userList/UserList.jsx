@@ -8,7 +8,7 @@ import "./userList.css";
 
 export default function UserList() {
   const { users, dispatch } = useContext(UserContext);
-  console.log(users);
+
   const handleDelete = (id) => {};
   useEffect(() => {
     getUsers(dispatch);

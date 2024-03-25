@@ -57,10 +57,24 @@
             display: flex;
             align-items: center;
 
+            .searchmovie{
+                display: flex;
+                
+               
+                .searchmovie_Input{
+                    height: 30px;
+                    border-radius:5px;
+                    padding: 0 10px;
+                    background-color: transparent;
+                    color: white;
+                }
+              
+            }
             .icon {
                 margin: 0 15px;
                 cursor: pointer;
             }
+           
             img{
                 height: 30px;
                 width: 30px;

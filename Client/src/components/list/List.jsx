@@ -11,7 +11,7 @@ export default function List({ list }) {
 
   return (
     <div className="list">
-      <span className="listTitle">{list.title}</span>
+      <span className="listTitle">{list.title ?? "Danh sách tìm kiếm"}</span>
       <div className="wrapper">
         <Swiper
           slidesPerView={1}
@@ -34,13 +34,22 @@ export default function List({ list }) {
             },
           }}
         >
-          {list.content.map((item, i) => {
-            return (
-              <SwiperSlide key={i}>
-                <ListItem index={i} item={item} />
-              </SwiperSlide>
-            );
-          })}
+          {list.content &&
+            list.content.map((item, i) => {
+              return (
+                <SwiperSlide key={i}>
+                  <ListItem index={i} item={item} />
+                </SwiperSlide>
+              );
+            })}
+          {!list.content &&
+            list.map((item, i) => {
+              return (
+                <SwiperSlide key={i}>
+                  <ListItem index={i} item={item._id} />
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </div>
