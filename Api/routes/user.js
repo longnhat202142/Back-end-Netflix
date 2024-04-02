@@ -82,4 +82,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Xoá nhiều
+router.post("/delete-many", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const ids = req.body.ids;
+      await User.deleteMany({ _id: { $in: ids } });
+      res.status(200).json("Người dùng đã được xoá !!!");
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.status(403).json("Bạn không được phép!!!");
+  }
+});
+
 module.exports = router;

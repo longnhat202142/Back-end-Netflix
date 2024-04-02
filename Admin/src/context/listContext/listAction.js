@@ -40,6 +40,20 @@ export const deleteListFailure = () => ({
   type: "DELETE_LIST_FAILURE",
 });
 
+// Xoá nhiều
+export const deleteManyStart = () => ({
+  type: "DELETE_MANY_START",
+});
+
+export const deleteManySuccess = (ids) => ({
+  type: "DELETE_MANY_SUCCESS",
+  payload: ids,
+});
+
+export const deleteManyFailure = () => ({
+  type: "DELETE_MANY_FAILURE",
+});
+
 // Trạng thái thêm danh sach
 export const createListStart = () => ({
   type: "CREATE_LIST_START",

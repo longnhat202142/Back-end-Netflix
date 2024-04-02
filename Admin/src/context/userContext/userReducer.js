@@ -59,7 +59,7 @@ const UseReducer = (state, action) => {
         error: true,
       };
 
-    // TRẠNG THÁI CẬP NH
+    // TRẠNG THÁI CẬP NHẬT
     case "UPLOAD_USER_START":
       return {
         ...state,
@@ -77,6 +77,25 @@ const UseReducer = (state, action) => {
     case "UPLOAD_USER_FAILURE":
       return {
         ...state,
+        isFetching: false,
+        error: true,
+      };
+    // Trạng thái xoá nhiều
+    case "DELETE_MANY_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "DELETE_MANY_SUCCESS":
+      return {
+        users: state.users.filter((user) => !action.payload.includes(user._id)),
+        isFetching: false,
+        error: false,
+      };
+    case "DELETE_MANY_FAILURE":
+      return {
+        movies: [],
         isFetching: false,
         error: true,
       };

@@ -1,9 +1,3 @@
-import {
-  Add,
-  PlayArrow,
-  ThumbDownRounded,
-  ThumbUpAltOutlined,
-} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import httpClient from "../../api/httpClient";
@@ -32,7 +26,7 @@ export default function ListItem({ index, item }) {
   }, [item]);
 
   return (
-    <Link to={{ pathname: "/watch" }}>
+    <Link to={{ pathname: "/watch/" + item }}>
       {movie && (
         <div className="listItem">
           <img src={movie.img} alt="" />

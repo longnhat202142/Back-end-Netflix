@@ -38,6 +38,7 @@ export const getMoviesRandom = async (type, genre, dispatch) => {
       }
     );
     dispatch(getMoviesSuccess(res.data));
+    return res.data;
   } catch (error) {
     dispatch(getMoviesFailure());
   }

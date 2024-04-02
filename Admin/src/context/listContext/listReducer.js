@@ -80,6 +80,26 @@ const ListsReducer = (state, action) => {
         error: true,
       };
 
+    // Trạng thái xoá nhiều
+    case "DELETE_MANY_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "DELETE_MANY_SUCCESS":
+      return {
+        lists: state.lists.filter((list) => !action.payload.includes(list._id)),
+        isFetching: false,
+        error: false,
+      };
+    case "DELETE_MANY_FAILURE":
+      return {
+        lists: [],
+        isFetching: false,
+        error: true,
+      };
+
     // Trạng thái cập nhật
     case "UPLOAD_LIST_START":
       return {

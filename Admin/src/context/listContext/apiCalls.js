@@ -6,6 +6,9 @@ import {
   deleteListFailure,
   deleteListStart,
   deleteListSuccess,
+  deleteManyFailure,
+  deleteManyStart,
+  deleteManySuccess,
   getListsFailure,
   getListsStart,
   getListsSuccess,
@@ -63,7 +66,7 @@ export const updateList = async (list, dispatch) => {
   dispatch(uploadListStart());
   try {
     const res = await axios.put(
-      "http://localhost:8800/api/list" + list.id,
+      "http://localhost:8800/api/list/" + list._id,
       list,
       {
         headers: {
@@ -73,7 +76,28 @@ export const updateList = async (list, dispatch) => {
       }
     );
     dispatch(uploadListSuccess(res.data));
+    // console.log(uploadListSuccess(res.data));
   } catch (error) {
     dispatch(uploadListFailure());
+  }
+};
+
+export const deleteMany = async (ids, dispatch) => {
+  dispatch(deleteManyStart());
+  try {
+    const res = await axios.post(
+      "http://localhost:8800/api/list/delete-many",
+      { ids },
+      {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
+    dispatch(deleteManySuccess(res.data));
+    window.location.reload();
+  } catch (error) {
+    dispatch(deleteManyFailure());
   }
 };

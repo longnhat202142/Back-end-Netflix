@@ -3,6 +3,9 @@ import {
   createUserFailure,
   createUserStart,
   createUserSuccess,
+  deleteManyFailure,
+  deleteManyStart,
+  deleteManySuccess,
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
@@ -73,5 +76,26 @@ export const updateMovies = async (user, dispatch) => {
     dispatch(uploadUserSuccess(res.data));
   } catch (error) {
     dispatch(uploadUserFailure());
+  }
+};
+
+// Xoá nhiều
+export const deleteMany = async (ids, dispatch) => {
+  dispatch(deleteManyStart());
+  try {
+    const res = await axios.post(
+      "http://localhost:8800/api/user/delete-many",
+      { ids },
+      {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
+    dispatch(deleteManySuccess(res.data));
+    window.location.reload();
+  } catch (error) {
+    dispatch(deleteManyFailure());
   }
 };

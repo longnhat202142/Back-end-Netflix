@@ -52,3 +52,17 @@ export const uploadMovieSuccess = (movie) => ({
 export const uploadMovieFailure = () => ({
   type: "UPLOAD_MOVIE_FAILURE",
 });
+
+// Xoá nhiều
+export const deleteManyStart = () => ({
+  type: "DELETE_MANY_START",
+});
+
+export const deleteManySuccess = (ids) => ({
+  type: "DELETE_MANY_SUCCESS",
+  payload: ids,
+});
+
+export const deleteManyFailure = () => ({
+  type: "DELETE_MANY_FAILURE",
+});

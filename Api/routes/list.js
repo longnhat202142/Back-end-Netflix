@@ -31,6 +31,20 @@ router.delete("/:id", verify, async (req, res) => {
   }
 });
 
+router.post("/delete-many", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const ids = req.body.ids;
+      await List.deleteMany({ _id: { $in: ids } });
+      res.status(200).json("Danh sách đã được xoá !!!");
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.status(403).json("Bạn không được phép!!!");
+  }
+});
+
 // Lấy danh sách
 router.get("/", verify, async (req, res) => {
   const typeQuery = req.query.type;

@@ -12,7 +12,7 @@ export default function WidgetSm() {
         const res = await axios.get("http://localhost:8800/api/user?new=true", {
           headers: {
             token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwODkxODgyN30.3_Gj-epBtKo5gOk1yd_i-QuYy9U8enzyC-tY7lG2z4E",
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
           },
         });
         setNewUsers(res.data);
@@ -27,7 +27,7 @@ export default function WidgetSm() {
 
   return (
     <div className="widgetSm">
-      <span className="widgetSmTitle">New Join Members</span>
+      <span className="widgetSmTitle">Người dùng mới</span>
       <ul className="widgetSmList">
         {newUser.map((user) => (
           <li className="widgetSmListItem" key={user._id}>

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { updateList } from "../../context/listContext/apiCalls";
@@ -11,15 +11,22 @@ export default function List() {
   const history = useHistory();
   const { dispatch } = useContext(ListContext);
 
+  const [update, setUpdate] = useState(list);
+  const handleChange = (e) => {
+    const value = e.target.value;
+
+    setUpdate({ ...update, [e.target.name]: value });
+  };
   // const history = useHistory();
   // useEffect(() => {
   //   getLists(dispatch);
   // }, [dispatch]);
-  console.log(list);
+  console.log(update);
   const handleUpdate = (e) => {
     e.preventDefault();
-    updateList(list, dispatch);
+    updateList(update, dispatch);
     history.push("/lists");
+    console.log(update);
   };
   return (
     <div className="product">
@@ -55,11 +62,31 @@ export default function List() {
         <form className="productForm">
           <div className="productFormLeft">
             <label>Tiêu đề </label>
-            <input type="text" placeholder={list.title} />
+            <input
+              type="text"
+              placeholder={list.title}
+              onChange={handleChange}
+              name="title"
+            />
             <label>Thể loại</label>
-            <input type="text" placeholder={list.genre} />
+            <input
+              type="text"
+              placeholder={list.genre}
+              onChange={handleChange}
+              name="genre"
+            />
             <label>Kiểu</label>
-            <input type="text" placeholder={list.type} />
+            <select name="type" onChange={handleChange}>
+              <option value="">--- Thể loại ---</option>
+              <option value="movies">Phim</option>
+              <option value="series">Series</option>
+            </select>
+            {/* <input
+              type="text"
+              placeholder={list.type}
+              onChange={handleChange}
+              name="type"
+            /> */}
             <button className="productButton" onClick={handleUpdate}>
               Cập nhật
             </button>

@@ -29,3 +29,60 @@
     color: red;
     cursor: pointer;
 }
+
+
+.btnDeleteMany {
+    width: 100px;
+    height: 40px;
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+   
+}
+
+.btnDeleteMany:hover {
+    background-color: #c0392b;
+}
+
+.btnDeleteMany.clicked {
+    animation: scaleDown 0.5s ease forwards;
+}
+
+@keyframes scaleDown {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+
+.btnCreate{
+    width: 100px;
+    height: 40px;
+    background-color: #27f80bf3;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top:60%;
+    right: 150px;
+  }
+  
+  .btnCreate:hover {
+    background-color: #36b45cce;
+  }
+  
+  .btnCreate.clicked {
+    animation: scaleDown 0.5s ease forwards;
+  }
+  

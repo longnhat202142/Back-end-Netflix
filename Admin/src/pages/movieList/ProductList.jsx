@@ -1,14 +1,18 @@
 import { DeleteOutline } from "@material-ui/icons";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
-import { deleteMovies, getMovies } from "../../context/movieContext/apiCalls";
+import {
+  deleteMany,
+  deleteMovies,
+  getMovies,
+} from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/movieContext";
 import "./productList.css";
 
 export default function ProductList() {
   const { movies, dispatch } = useContext(MovieContext);
-
+  const [ids, setIds] = useState([]);
   useEffect(() => {
     getMovies(dispatch);
   }, [dispatch]);
@@ -17,7 +21,6 @@ export default function ProductList() {
     deleteMovies(id, dispatch);
   };
 
-  //console.log(movies);
   const columns = [
     { field: "_id", headerName: "ID", width: 200 },
     {
@@ -60,17 +63,34 @@ export default function ProductList() {
     },
   ];
 
+  const handleDeleteMany = async () => {
+    await deleteMany(ids, dispatch);
+  };
+
   return (
-    <div className="productList">
-      <DataGrid
-        rows={movies}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[8]}
-        checkboxSelection
-        getRowId={(row) => row._id}
-      />
-    </div>
+    <>
+      <div className="productList">
+        <DataGrid
+          rows={movies}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={8}
+          rowsPerPageOptions={[8]}
+          checkboxSelection
+          getRowId={(row) => row._id}
+          onSelectionModelChange={(ids) => {
+            setIds(ids);
+          }}
+        />
+      </div>
+      <div className="container">
+        <button className="btnDeleteMany" onClick={handleDeleteMany}>
+          Xoá
+        </button>
+        <Link to="/newmovie">
+          <button className="btnCreate">Thêm</button>
+        </Link>
+      </div>
+    </>
   );
 }

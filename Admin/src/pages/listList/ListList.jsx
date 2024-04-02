@@ -1,13 +1,18 @@
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteList, getLists } from "../../context/listContext/apiCalls";
+import {
+  deleteList,
+  deleteMany,
+  getLists,
+} from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import "./listList.css";
 
 export default function ListList() {
   const { lists, dispatch } = useContext(ListContext);
+  const [ids, setIds] = useState([]);
 
   useEffect(() => {
     getLists(dispatch);
@@ -17,7 +22,6 @@ export default function ListList() {
     deleteList(id, dispatch);
   };
 
-  //console.log(movies);
   const columns = [
     { field: "_id", headerName: "ID", width: 200 },
 
@@ -47,17 +51,31 @@ export default function ListList() {
     },
   ];
 
+  const handleDeleteMany = async () => {
+    console.log(ids);
+    await deleteMany(ids, dispatch);
+  };
+
   return (
     <div className="productList">
       <DataGrid
         rows={lists}
-        disableSelectionOnClick
+        // disableSelectionOnClick
         columns={columns}
         pageSize={8}
         rowsPerPageOptions={[8]}
         checkboxSelection
         getRowId={(row) => row._id}
+        onSelectionModelChange={(ids) => {
+          setIds(ids);
+        }}
       />
+      <button className="btnDeleteMany" onClick={handleDeleteMany}>
+        Xoá
+      </button>
+      <Link to="/newList">
+        <button className="btnCreate">Thêm</button>
+      </Link>
     </div>
   );
 }

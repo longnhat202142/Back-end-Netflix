@@ -3,7 +3,7 @@ import "./Featured.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Featured({ type, setGenre }) {
+export default function Featured({ type, setGenre, genres }) {
   const [content, setContent] = useState({});
 
   useEffect(() => {
@@ -14,7 +14,8 @@ export default function Featured({ type, setGenre }) {
           {
             headers: {
               token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxMDEyNjY0NH0.gMYhwfh4xUT-DW2ZRbilF1LBSMDLSAQfc2qn_tTwchY",
+                "Bearer " +
+                JSON.parse(localStorage.getItem("user")).accessToken,
             },
           }
         );
@@ -37,11 +38,12 @@ export default function Featured({ type, setGenre }) {
             id="genre"
             onChange={(e) => setGenre(e.target.value)}
           >
-            <option>Thể loại</option>
-            <option value="Hanhdong">Hành dộng</option>
-            <option value="Thethao">Thể thao</option>
-            <option value="Kinhdi">Kinh dị</option>
-            <option value="Hoathinh">Hoạt hình</option>
+            <option value="">Thể loại</option>
+            {genres.map((e) => (
+              <option key={e} value={e}>
+                {e}
+              </option>
+            ))}
           </select>
         </div>
       )}
