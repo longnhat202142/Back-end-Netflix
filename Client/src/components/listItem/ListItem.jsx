@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import httpClient from "../../api/httpClient";
 import "./ListItem.scss";
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { FreeMode, Pagination } from 'swiper/modules';
+import {
+  PlayArrow,
+  Add,
+  ThumbUpAltOutlined,
+  ThumbDownRounded,
+} from "@mui/icons-material";
 export default function ListItem({ index, item }) {
   const [movie, setMovie] = useState({});
 
@@ -13,7 +17,7 @@ export default function ListItem({ index, item }) {
         const res = await httpClient.get("/movie/find/" + item, {
           headers: {
             token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MDg4NzYwMDN9.5wbBVbCVQIhF5zZUhoi45vDV900Aclarh6MakNdbe8M",
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
           },
         });
 
@@ -31,15 +35,14 @@ export default function ListItem({ index, item }) {
         <div className="listItem">
           <img src={movie.img} alt="" />
           <div className="listItem-popup">
-            <h1>hello</h1>
-            {/* <iframe
-              src="https://www.youtube.com/embed/tsNswx0nRKM"
-              title="React Node.js Netflix App | MERN Stack + JWT Full Tutorial"
+            <iframe
+              src={movie.trailer}
+              title={movie.title}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-            ></iframe> */}
-            {/* <div className="itemInfo">
+            ></iframe>
+            <div className="itemInfo">
               <div className="icons">
                 <PlayArrow className="icon" />
                 <Add className="icon" />
@@ -48,15 +51,13 @@ export default function ListItem({ index, item }) {
               </div>
 
               <div className="itemInfoTop">
-                <span>1h14p</span>
-                <span className="limit"> +{movie.limit}</span>
                 <span>{movie.year}</span>
               </div>
 
               <div className="desc">{movie.desc}</div>
 
               <div className="genre">{movie.genre}</div>
-            </div> */}
+            </div>
           </div>
         </div>
       )}

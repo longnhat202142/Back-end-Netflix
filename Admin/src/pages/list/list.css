@@ -48,7 +48,6 @@
 .productInfoTop {
   display: flex;
   align-items: center;
-  
 }
 
 .productName {
@@ -68,7 +67,6 @@
 
 .productInfoValue {
   font-weight: 300;
- 
 }
 
 .productBottom {
@@ -101,11 +99,11 @@
   min-width: 350px;
 }
 
-.productFormLeft >select{
+.productFormLeft > select {
   margin-bottom: 10px;
 }
 
-.productUploadImg{
+.productUploadImg {
   width: 100px;
   height: 100px;
   border-radius: 10px;
@@ -113,25 +111,41 @@
   margin-right: 20px;
 }
 
-.productFormRight{
+.productFormRight {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.productUpload{
+.productUpload {
   display: flex;
   align-items: center;
 }
 
-.productButton{
+.productButton {
   border: none;
   padding: 5px;
   border-radius: 5px;
   background-color: darkblue;
-  color:white;
+  color: white;
   font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
 }
 
+.productLeftTitle {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back {
+  color: black;
+  cursor: pointer;
+  z-index: 2;
+  padding-right: 10px;
+}
+.productTitle{
+  font-size: 30px;
+}

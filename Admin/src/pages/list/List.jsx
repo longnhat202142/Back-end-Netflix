@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import "./list.css";
+import { ArrowBackOutlined } from "@material-ui/icons";
 
 export default function List() {
   const location = useLocation();
@@ -31,7 +32,15 @@ export default function List() {
   return (
     <div className="product">
       <div className="productTitleContainer">
-        <h1 className="productTitle">Danh sách</h1>
+        <div className="productLeftTitle">
+          <Link to="/lists">
+            <div className="back">
+              <ArrowBackOutlined />
+            </div>
+          </Link>
+          <h1 className="productTitle">Danh sách</h1>
+        </div>
+
         <Link to="/newList" style={{ display: "inline-block" }}>
           <button className="productAddButton">Thêm danh sách</button>
         </Link>

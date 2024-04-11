@@ -131,3 +131,21 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.productLeftTitle{
+  width:120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+
+.back{
+   
+    
+    color: black;
+    cursor: pointer;
+    z-index: 2;
+
+}

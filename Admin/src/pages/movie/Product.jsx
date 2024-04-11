@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { updateMovies } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/movieContext";
-
+import { ArrowBackOutlined } from "@mui/icons-material";
 import "./product.css";
 export default function Product() {
   const location = useLocation();
@@ -13,7 +13,7 @@ export default function Product() {
   const [update, setUpdate] = useState(movie);
 
   const { dispatch } = useContext(MovieContext);
-
+  console.log(location);
   const handleChange = (e) => {
     const value = e.target.value;
 
@@ -30,7 +30,14 @@ export default function Product() {
   return (
     <div className="product">
       <div className="productTitleContainer">
-        <h1 className="productTitle">Phim</h1>
+        <div className="productLeftTitle">
+          <Link to="/movies">
+            <div className="back">
+              <ArrowBackOutlined />
+            </div>
+          </Link>
+          <h1 className="productTitle">Phim</h1>
+        </div>
         <Link to="/newmovie">
           <button className="productAddButton">Thêm phim mới</button>
         </Link>

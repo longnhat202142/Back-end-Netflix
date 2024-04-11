@@ -152,3 +152,22 @@
     color: white;
     font-weight: 600;
 }
+
+.userLeftTitle{
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+
+.back{
+    color: black;
+    cursor: pointer;
+    z-index: 2;
+
+}
+.userTitle{
+  font-size: 30px;
+}

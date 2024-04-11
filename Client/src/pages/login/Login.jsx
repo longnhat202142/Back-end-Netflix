@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import "./Login.scss";
 import { login } from "../../authContext/apiCalls";
 import { AuthContext } from "../../authContext/AuthContext";
+import { Link } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,8 +44,7 @@ export default function Login() {
           </button>
 
           <div className="login-now">
-            Bạn mới tham gia Netflix?{" "}
-            <a href="https://www.netflix.com/vn/">Đăng kí ngay</a>
+            Bạn mới tham gia Netflix? <Link to={"/register"}>Đăng kí ngay</Link>
             <p>
               Trang này được Google reCAPTCHA bảo vệ để đảm bảo bạn không phải
               là robot. <a href="">Tìm hiểu thêm</a>

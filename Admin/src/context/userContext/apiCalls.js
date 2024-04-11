@@ -60,7 +60,7 @@ export const createUser = async (user, dispatch) => {
 };
 
 // Cập nhật
-export const updateMovies = async (user, dispatch) => {
+export const updateUser = async (user, dispatch) => {
   dispatch(uploadUserStart());
   try {
     const res = await axios.put(

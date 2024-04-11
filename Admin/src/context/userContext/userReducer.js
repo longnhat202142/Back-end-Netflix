@@ -95,7 +95,7 @@ const UseReducer = (state, action) => {
       };
     case "DELETE_MANY_FAILURE":
       return {
-        movies: [],
+        users: [],
         isFetching: false,
         error: true,
       };

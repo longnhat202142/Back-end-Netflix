@@ -57,7 +57,7 @@ router.get("/find/:id", verify, async (req, res) => {
   try {
     const id = req.params.id;
     const movie = await Movie.findById(id);
-    console.log(movie);
+    // console.log(movie);
     res.status(200).json(movie);
   } catch (error) {
     res.status(500).json(error);

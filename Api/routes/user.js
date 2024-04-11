@@ -2,6 +2,7 @@ const router = require("express").Router();
 const verify = require("../verifyToken");
 const User = require("../models/user");
 const CryptoJS = require("crypto-js");
+const { handleDecodePassword } = require("../utils");
 
 //Cập nhật
 router.put("/:id", verify, async (req, res) => {
@@ -61,7 +62,12 @@ router.get("/", verify, async (req, res) => {
       const users = query
         ? await User.find(req.params.id).limit(5)
         : await User.find();
-
+      // const newUsers = users.map((user) => {
+      //   return {
+      //     ...user,
+      //     password: handleDecodePassword(user.password),
+      //   };
+      // });
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json(error);

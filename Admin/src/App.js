@@ -40,7 +40,7 @@ function App() {
               <Route path="/users">
                 <UserList />
               </Route>
-              <Route path="/user/:userId">
+              <Route path="/user/:id">
                 <User />
               </Route>
               <Route path="/newUser">
