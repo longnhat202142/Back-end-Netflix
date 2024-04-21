@@ -2,9 +2,10 @@ import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import "./Featured.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-export default function Featured({ type, setGenre, genres }) {
+import { Link } from "react-router-dom";
+export default function Featured({ type, setGenre }) {
   const [content, setContent] = useState({});
+  const [genres, setGenres] = useState([]);
 
   useEffect(() => {
     const getRandomContent = async () => {
@@ -28,6 +29,28 @@ export default function Featured({ type, setGenre, genres }) {
     getRandomContent();
   }, [type]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/api/movie", {
+          headers: {
+            token:
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+          },
+        });
+        if (res.data) {
+          const genreList = res.data.map((e) => e.genre);
+          const newGenres = [...new Set(genreList)];
+          setGenres(newGenres);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="featured">
       {type && (
@@ -39,8 +62,8 @@ export default function Featured({ type, setGenre, genres }) {
             onChange={(e) => setGenre(e.target.value)}
           >
             <option value="">Thể loại</option>
-            {genres.map((e) => (
-              <option key={e} value={e}>
+            {genres.map((e, index) => (
+              <option key={index} value={e}>
                 {e}
               </option>
             ))}
@@ -54,13 +77,13 @@ export default function Featured({ type, setGenre, genres }) {
 
         <span className="desc">{content.desc}</span>
         <div className="buttons">
-          <button className="play">
+          <Link to={{ pathname: "/watch/" + content._id }} className="play">
             <PlayArrow />
-            <span>Play</span>
-          </button>
+            <span>Xem</span>
+          </Link>
           <button className="more">
             <InfoOutlined />
-            <span>Info</span>
+            <span>Thông tin</span>
           </button>
         </div>
       </div>

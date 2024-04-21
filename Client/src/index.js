@@ -4,14 +4,17 @@ import "./index.css";
 import App from "./App";
 import { AuthContextProvider } from "./authContext/AuthContext";
 import { MovieContextProvider } from "./movieContext/movieContext";
+import { UserContextProvider } from "./userContext/userContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <MovieContextProvider>
-        <App />
-      </MovieContextProvider>
+      <UserContextProvider>
+        <MovieContextProvider>
+          <App />
+        </MovieContextProvider>
+      </UserContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

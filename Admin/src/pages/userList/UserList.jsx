@@ -93,7 +93,9 @@ export default function UserList() {
         <button className="btnDeleteMany" onClick={handleDeleteMany}>
           Xoá
         </button>
-        <button className="btnCreate">Thêm</button>
+        <Link to="newUser">
+          <button className="btnCreate">Thêm</button>
+        </Link>
       </div>
     </>
   );

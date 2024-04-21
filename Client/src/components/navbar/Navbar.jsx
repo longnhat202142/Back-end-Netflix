@@ -10,7 +10,7 @@ import { getMoviesRandom, searchMoviesApi } from "../../movieContext/apiCalls";
 // import { findMoviesSuccess } from "../../movieContext/movieAction";
 
 const Navbar = () => {
-  const { dispatchau } = useContext(AuthContext);
+  const { dispatchAu } = useContext(AuthContext);
   const { dispatch } = useContext(MovieContext);
   const [searchMovie, setSearchMovie] = useState("");
 
@@ -21,12 +21,6 @@ const Navbar = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
-
-  // useEffect(() => {
-  //   const findMovies = async () => await searchMoviesApi(searchMovie, dispatch);
-
-  //   if (searchMovie) findMovies();
-  // }, [searchMovie]);
 
   // Tìm kiếm phim
 
@@ -45,10 +39,12 @@ const Navbar = () => {
     <div className={isScrolled ? "navbar scroll" : "navbar"}>
       <div className="container">
         <div className="left">
-          <img
-            src="https://images.ctfassets.net/y2ske730sjqp/1aONibCke6niZhgPxuiilC/2c401b05a07288746ddf3bd3943fbc76/BrandAssets_Logos_01-Wordmark.jpg?w=940"
-            alt=""
-          />
+          <Link to="/">
+            <img
+              src="https://images.ctfassets.net/y2ske730sjqp/1aONibCke6niZhgPxuiilC/2c401b05a07288746ddf3bd3943fbc76/BrandAssets_Logos_01-Wordmark.jpg?w=940"
+              alt=""
+            />
+          </Link>
           <Link to="/" className="link">
             <span>Trang chủ</span>
           </Link>
@@ -85,8 +81,8 @@ const Navbar = () => {
           <div className="profile">
             <ArrowDropDown className="icon" />
             <div className="options">
-              <span>Cài đặt</span>
-              <span onClick={() => dispatchau(logout())}>Đăng xuất</span>
+              <Link to={"/account"}>Cài đặt</Link>
+              <span onClick={() => dispatchAu(logout())}>Đăng xuất</span>
             </div>
           </div>
         </div>

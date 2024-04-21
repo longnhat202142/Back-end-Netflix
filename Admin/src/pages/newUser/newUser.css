@@ -4,9 +4,15 @@
 
 .newUserForm {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
 }
 
+.newForm{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
 .newUserItem {
   width: 400px;
   display: flex;

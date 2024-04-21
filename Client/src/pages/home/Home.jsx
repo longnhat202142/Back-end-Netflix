@@ -10,29 +10,19 @@ const Home = ({ type }) => {
   // const [lists, setLists] = useState([]);
   const { movies, dispatch, isFind } = useContext(MovieContext);
   const [genre, setGenre] = useState(null);
-  const [genres, setGenres] = useState([]);
 
   useEffect(() => {
     const getRandomLists = async () => {
       await getMoviesRandom(type, genre, dispatch);
     };
     getRandomLists();
+    // eslint-disable-next-line
   }, [type, genre]);
-
-  useEffect(() => {
-    const fetchGenre = async () => {
-      const res = await getMoviesRandom(type, "", dispatch);
-      const genreList = res.map((e) => e.genre);
-      setGenres(genreList);
-    };
-
-    fetchGenre();
-  }, []);
 
   return (
     <div className="home">
       <Navbar />
-      <Featured type={type} setGenre={setGenre} genres={genres} />
+      <Featured type={type} setGenre={setGenre} />
       {isFind ? (
         <List list={movies}></List>
       ) : (

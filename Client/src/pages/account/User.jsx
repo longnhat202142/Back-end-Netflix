@@ -1,102 +1,60 @@
 import {
   ArrowBackOutlined,
-  CalendarToday,
   LocationSearching,
   MailOutline,
   PermIdentity,
-  PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link, useHistory } from "react-router-dom";
-import "./user.css";
-
+// import axios from "axios";
+// import CryptoJS from "crypto-js";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { UserContext } from "../../context/userContext/userContext";
-import { updateUser } from "../../context/userContext/apiCalls";
-import CryptoJS from "crypto-js";
-import dotenv from "dotenv";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import axios from "axios";
-dotenv.config();
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { updateUser } from "../../userContext/apiCalls";
+import { UserContext } from "../../userContext/userContext";
+import "./user.css";
+import { AuthContext } from "../../authContext/AuthContext";
 
 export default function User() {
-  const { id } = useParams();
+  const { dispatch } = useContext(AuthContext);
+  const { dispatch: dispatchUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")).info || {}
+  );
 
-  const history = useHistory();
-  const { dispatch } = useContext(UserContext);
+  const handleUpdateUser = (e) => {
+    e.preventDefault();
+    updateUser(user, dispatch);
+    navigate("/users");
+  };
 
-  const [user, setUser] = useState();
-
-  let phoneNumber = null;
   const handleChange = (e) => {
     const value = e.target.value;
 
     setUser({ ...user, [e.target.name]: value });
   };
 
-  const handleUpdateUser = (e) => {
-    e.preventDefault();
-    updateUser(user, dispatch);
-    history.push("/users");
-  };
+  // useEffect(() => {
+  //   const secretKey = process.env.REACT_APP_SECRET_KEY;
+  //   const decrypted = CryptoJS.AES.decrypt(user.password, secretKey);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(id);
-      const res = await axios.get("http://localhost:8800/api/user/find/" + id, {
-        headers: {
-          token:
-            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-        },
-      });
-      if (res.status === 200) {
-        const data = res.data;
-        const secretKey = process.env.REACT_APP_SECRET_KEY;
-        const decrypted = CryptoJS.AES.decrypt(data.password, secretKey);
+  //   const passworDecrypted = decrypted.toString(CryptoJS.enc.Utf8);
+  //   setUser({ ...user, password: passworDecrypted });
+  // }, []);
 
-        const passworDecrypted = decrypted.toString(CryptoJS.enc.Utf8);
-        setUser({ ...data, password: passworDecrypted });
-      }
-    };
-    fetchData();
-
-    // eslint-disable-next-line
-  }, []);
-
-  function RandomPhoneNumber() {
-    const generateRandomNumber = (length) => {
-      return Math.floor(Math.random() * Math.pow(10, length));
-    };
-
-    const areaCode = generateRandomNumber(3);
-    const mainNumber = generateRandomNumber(7);
-    return `+84 ${areaCode} ${mainNumber}`;
-  }
-  phoneNumber = useMemo(() => RandomPhoneNumber(), []);
-  function getRandomDateOfBirth() {
-    const day = Math.floor(Math.random() * 28) + 1;
-    const month = Math.floor(Math.random() * 12) + 1;
-    const year = Math.floor(Math.random() * (2010 - 1995 + 1)) + 1995;
-    const dateOfBirth = `${day}/${month}/${year}`;
-
-    return dateOfBirth;
-  }
-  const randomDateOfBirth = useMemo(() => getRandomDateOfBirth(), []);
+  console.log(user);
 
   return (
     <div className="user">
       <div className="userTitleContainer">
         <div className="userLeftTitle">
-          <Link to="/users">
+          <Link to="/">
             <div className="back">
               <ArrowBackOutlined />
             </div>
           </Link>
           <h1 className="userTitle">Người dùng</h1>
         </div>
-        <Link to="/newUser">
-          <button className="userAddButton">Thêm người dùng</button>
-        </Link>
       </div>
       <div className="userContainer">
         <div className="userShow">
@@ -122,15 +80,7 @@ export default function User() {
               <PermIdentity className="userShowIcon" />
               <span className="userShowInfoTitle">{user?.username}</span>
             </div>
-            <div className="userShowInfo">
-              <CalendarToday className="userShowIcon" />
-              <span className="userShowInfoTitle">{randomDateOfBirth}</span>
-            </div>
             <span className="userShowTitle">Thông tin</span>
-            <div className="userShowInfo">
-              <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">{phoneNumber}</span>
-            </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
               <span className="userShowInfoTitle">{user?.email}</span>
@@ -167,25 +117,6 @@ export default function User() {
                 />
               </div>
 
-              <div className="userUpdateItem">
-                <label>Mật khẩu</label>
-                <input
-                  type="text"
-                  placeholder={user?.password}
-                  className="userUpdateInput"
-                  onChange={handleChange}
-                  name="password"
-                />
-              </div>
-              <div className="userUpdateItem">
-                <label>Điện thoại</label>
-                <input
-                  type="text"
-                  placeholder={phoneNumber}
-                  className="userUpdateInput"
-                  disabled
-                />
-              </div>
               <div className="userUpdateItem">
                 <label>Address</label>
                 <input

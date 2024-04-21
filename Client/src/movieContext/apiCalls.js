@@ -32,8 +32,7 @@ export const getMoviesRandom = async (type, genre, dispatch) => {
       {
         headers: {
           token:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDYxMGMyODJmMTRmODU1MWE5MzkzZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxMDEyNjY0NH0.gMYhwfh4xUT-DW2ZRbilF1LBSMDLSAQfc2qn_tTwchY",
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
         },
       }
     );
