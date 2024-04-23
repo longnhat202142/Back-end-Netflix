@@ -4,6 +4,18 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext/userContext";
 import { createUser } from "../../context/userContext/apiCalls";
 import storage from "../../firebase.js";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  username: yup.string().required("Không được bỏ trống."),
+  email: yup
+    .string()
+    .required("Không được bỏ trống.")
+    .email("Email không hợp lệ."),
+  password: yup.string().required("Không được bỏ trống."),
+});
 
 export default function NewUser() {
   const history = useHistory();
@@ -12,10 +24,28 @@ export default function NewUser() {
   const [profliePicture, setProfliePicture] = useState(null);
   const [user, setUser] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createUser(user, dispatch);
-    history.push("/users");
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (values) => {
+    const payload = {
+      ...values,
+      isAdmin: user.active,
+      profliePicture: user.profliePicture,
+    };
+    try {
+      await createUser(payload, dispatch);
+      alert("Thêm mới người dùng thành công!");
+      history.push("/users");
+    } catch (error) {
+      setError("email", error.response.data);
+    }
   };
   const handleChange = (e) => {
     const value = e.target.value;
@@ -57,18 +87,23 @@ export default function NewUser() {
       },
     ]);
   };
+
   return (
     <div className="newUser">
       <h1 className="newUserTitle">Thêm người dùng</h1>
       <form className="newUserForm">
         <div className="newUserItem">
           <label>Tên người dùng</label>
+
           <input
             type="text"
             placeholder="Tên người dùng"
             name="username"
-            onChange={handleChange}
+            {...register("username")}
           />
+          {errors.username && (
+            <span style={{ color: "red" }}>{errors.username.message}</span>
+          )}
         </div>
 
         <div className="newUserItem">
@@ -77,8 +112,11 @@ export default function NewUser() {
             type="email"
             placeholder="Email"
             name="email"
-            onChange={handleChange}
+            {...register("email")}
           />
+          {errors.email && (
+            <span style={{ color: "red" }}>{errors.email.message}</span>
+          )}
         </div>
         <div className="newUserItem">
           <label>Mật khẩu</label>
@@ -86,8 +124,11 @@ export default function NewUser() {
             type="password"
             placeholder="Mật khẩu"
             name="password"
-            onChange={handleChange}
+            {...register("password")}
           />
+          {errors.password && (
+            <span style={{ color: "red" }}>{errors.password.message}</span>
+          )}
         </div>
 
         <div className="newUserItem">
@@ -113,7 +154,7 @@ export default function NewUser() {
           />
         </div>
         {uploaded === 1 ? (
-          <button className="newUserButton" onClick={handleSubmit}>
+          <button className="newUserButton" onClick={handleSubmit(onSubmit)}>
             Thêm
           </button>
         ) : (

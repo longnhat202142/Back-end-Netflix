@@ -1,34 +1,45 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import "./list.css";
 import { ArrowBackOutlined } from "@material-ui/icons";
+import axios from "axios";
 
 export default function List() {
-  const location = useLocation();
-  const list = location.list;
   const history = useHistory();
   const { dispatch } = useContext(ListContext);
-
-  const [update, setUpdate] = useState(list);
+  const { id } = useParams();
+  const [list, setList] = useState();
   const handleChange = (e) => {
     const value = e.target.value;
 
-    setUpdate({ ...update, [e.target.name]: value });
+    setList({ ...list, [e.target.name]: value });
   };
-  // const history = useHistory();
-  // useEffect(() => {
-  //   getLists(dispatch);
-  // }, [dispatch]);
-  console.log(update);
+
   const handleUpdate = (e) => {
     e.preventDefault();
-    updateList(update, dispatch);
+    updateList(list, dispatch);
     history.push("/lists");
-    console.log(update);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get("http://localhost:8800/api/list/find/" + id, {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      });
+      if (res.status === 200) {
+        const data = res.data;
+        setList({ ...data });
+      }
+    };
+    fetchData();
+
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -49,20 +60,20 @@ export default function List() {
         <div className="productTopRight">
           <div className="productInfoTop">
             <span className="productInfoKey">Tiêu đề</span>
-            <span className="productName">{list.title}</span>
+            <span className="productName">{list?.title}</span>
           </div>
           <div className="productInfoBottom">
             <div className="productInfoItem">
               <span className="productInfoKey">id:</span>
-              <span className="productInfoValue">{list._id}</span>
+              <span className="productInfoValue">{list?._id}</span>
             </div>
             <div className="productInfoItem">
               <span className="productInfoKey">Thể loại:</span>
-              <span className="productInfoValue">{list.genre}</span>
+              <span className="productInfoValue">{list?.genre}</span>
             </div>
             <div className="productInfoItem">
               <span className="productInfoKey">Kiểu</span>
-              <span className="productInfoValue">{list.type}</span>
+              <span className="productInfoValue">{list?.type}</span>
             </div>
           </div>
         </div>
@@ -73,14 +84,14 @@ export default function List() {
             <label>Tiêu đề </label>
             <input
               type="text"
-              placeholder={list.title}
+              placeholder={list?.title}
               onChange={handleChange}
               name="title"
             />
             <label>Thể loại</label>
             <input
               type="text"
-              placeholder={list.genre}
+              placeholder={list?.genre}
               onChange={handleChange}
               name="genre"
             />

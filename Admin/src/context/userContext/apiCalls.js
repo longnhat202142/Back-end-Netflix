@@ -54,8 +54,10 @@ export const createUser = async (user, dispatch) => {
   try {
     const res = await axios.post("http://localhost:8800/api/user", user);
     dispatch(createUserSuccess(res.data));
+    return res.data;
   } catch (error) {
     dispatch(createUserFailure());
+    throw error;
   }
 };
 

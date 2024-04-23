@@ -51,7 +51,7 @@ function App() {
               <Route path="/movies">
                 <ProductList />
               </Route>
-              <Route path="/movie/:movieId">
+              <Route path="/movie/:id">
                 <Product />
               </Route>
               <Route path="/newmovie">

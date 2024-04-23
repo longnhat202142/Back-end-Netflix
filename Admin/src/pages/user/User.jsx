@@ -9,15 +9,12 @@ import {
 } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
 import "./user.css";
-
 import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "../../context/userContext/userContext";
 import { updateUser } from "../../context/userContext/apiCalls";
 import CryptoJS from "crypto-js";
-import dotenv from "dotenv";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
-dotenv.config();
 
 export default function User() {
   const { id } = useParams();

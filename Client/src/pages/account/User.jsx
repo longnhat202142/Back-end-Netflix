@@ -7,7 +7,7 @@ import {
 } from "@material-ui/icons";
 // import axios from "axios";
 // import CryptoJS from "crypto-js";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { updateUser } from "../../userContext/apiCalls";
 import { UserContext } from "../../userContext/userContext";

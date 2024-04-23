@@ -13,7 +13,7 @@
   flex-wrap: wrap;
   flex-direction: row;
 }
-.newUserItem {
+.newUserItem  {
   width: 400px;
   display: flex;
   flex-direction: column;

@@ -36,7 +36,7 @@ export const createUserSuccess = (user) => ({
 });
 
 export const createUserFailure = () => ({
-  type: "upload_USER_FAILURE",
+  type: "UPLOAD_USER_FAILURE",
 });
 
 //Cập nhật phim

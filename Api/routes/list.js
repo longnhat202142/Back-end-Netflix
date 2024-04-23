@@ -79,10 +79,10 @@ router.get("/", verify, async (req, res) => {
 });
 
 // Xem thông tin để Upload lại trang
-router.get("/:id", verify, async (req, res) => {
-  const id = req.params.id;
+router.get("/find/:id", verify, async (req, res) => {
   if (req.user.isAdmin) {
     try {
+      const id = req.params.id;
       const list = await List.findById(id);
 
       res.status(200).json(list);

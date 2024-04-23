@@ -3,6 +3,7 @@ const verify = require("../verifyToken");
 const User = require("../models/user");
 const CryptoJS = require("crypto-js");
 const { handleDecodePassword } = require("../utils");
+const user = require("../models/user");
 
 //Cập nhật
 router.put("/:id", verify, async (req, res) => {
@@ -81,6 +82,17 @@ router.get("/", verify, async (req, res) => {
 router.post("/", async (req, res) => {
   const newUser = new User(req.body);
   try {
+    const checkEmail = await user.findOne({ email: newUser.email });
+    const checkUserName = await user.findOne({ username: newUser.username });
+    if (checkUserName)
+      return res
+        .status(400)
+        .json({ status: "error", message: "Tên người dùng đã tồn tại" });
+    else if (checkEmail)
+      return res
+        .status(400)
+        .json({ status: "error", message: "Email này đã tồn tại" });
+
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);
   } catch (error) {
