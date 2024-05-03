@@ -1,18 +1,24 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { createList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import { getMovies } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/movieContext";
 import "./newList.css";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
+const schema = yup.object().shape({
+  title: yup.string().required("Không được bỏ trống"),
+});
 export default function NewList() {
   const [list, setList] = useState(null);
   const [options, setOptions] = useState([]);
   const { dispatch } = useContext(ListContext);
   const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
-  const history = useHistory();
+  // const history = useHistory();
   useEffect(() => {
     getMovies(dispatchMovie);
     const fetchData = async () => {
@@ -42,10 +48,28 @@ export default function NewList() {
     setList({ ...list, [e.target.name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createList(list, dispatch);
-    history.push("/lists");
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = async (values) => {
+    const payload = {
+      ...values,
+      genre: list.genre,
+      type: list.type,
+      content: list.content,
+    };
+    const error = await createList(payload, dispatch);
+    if (error?.response) {
+      const erroMsg = error?.response?.data;
+      setError("title", erroMsg);
+    }
+    // alert("Thêm thành công phim mới !");
+    // history.push("/lists");
   };
 
   const handleSelect = (e) => {
@@ -62,9 +86,11 @@ export default function NewList() {
             type="text"
             placeholder="Tiêu đè"
             name="title"
-            onChange={handleChange}
+            {...register("title")}
           />
-
+          {errors.title && (
+            <span style={{ color: "red" }}>{errors.title.message}</span>
+          )}
           <label>Thể loại</label>
           {/* <input
             type="text"
@@ -82,7 +108,7 @@ export default function NewList() {
           </select>
 
           <label>Kiểu</label>
-          <select value="type" onChange={handleChange} name="type">
+          <select onChange={handleChange} name="type" id="type">
             <option>-- Chọn kiểu --</option>
             <option value="movie">Phim</option>
             <option value="series">Series</option>
@@ -102,7 +128,7 @@ export default function NewList() {
             ))}
           </select>
         </div>
-        <button className="addProductButton" onClick={handleSubmit}>
+        <button className="addProductButton" onClick={handleSubmit(onSubmit)}>
           Thêm
         </button>
       </form>

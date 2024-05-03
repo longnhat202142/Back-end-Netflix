@@ -24,6 +24,26 @@ const AuthReducer = (state, action) => {
         isFetching: false,
         error: false,
       };
+    // TRẠNG THÁI CẬP NHẬT
+    case "UPLOAD_USER_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "UPLOAD_USER_SUCCESS":
+      console.log(action.payload);
+      return {
+        user: { ...state.user, info: action.payload },
+        isFetching: false,
+        error: false,
+      };
+    case "UPLOAD_USER_FAILURE":
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
     default:
       return { ...state };
   }

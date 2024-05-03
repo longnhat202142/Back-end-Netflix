@@ -19,7 +19,6 @@ router.post("/", verify, async (req, res) => {
 
 // Cập nhật phim
 router.put("/:id", verify, async (req, res) => {
-  console.log(req.body);
   if (req.user.isAdmin) {
     try {
       const updatedMovie = await Movie.findByIdAndUpdate(

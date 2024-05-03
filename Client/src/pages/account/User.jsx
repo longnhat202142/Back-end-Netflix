@@ -3,46 +3,31 @@ import {
   LocationSearching,
   MailOutline,
   PermIdentity,
-  Publish,
 } from "@material-ui/icons";
-// import axios from "axios";
-// import CryptoJS from "crypto-js";
+
 import { useContext, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { updateUser } from "../../userContext/apiCalls";
-import { UserContext } from "../../userContext/userContext";
+
 import "./user.css";
 import { AuthContext } from "../../authContext/AuthContext";
-
 export default function User() {
-  const { dispatch } = useContext(AuthContext);
-  const { dispatch: dispatchUser } = useContext(UserContext);
-  const navigate = useNavigate();
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")).info || {}
-  );
+  const { dispatchAu } = useContext(AuthContext);
+
+  const [user] = useState(JSON.parse(localStorage.getItem("user")).info || {});
+  const [newUser, setNewUser] = useState(user);
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
-    updateUser(user, dispatch);
-    navigate("/users");
+    const { password, ...rest } = newUser;
+    updateUser(rest, dispatchAu);
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
 
-    setUser({ ...user, [e.target.name]: value });
+    setNewUser({ ...newUser, [e.target.name]: value });
   };
-
-  // useEffect(() => {
-  //   const secretKey = process.env.REACT_APP_SECRET_KEY;
-  //   const decrypted = CryptoJS.AES.decrypt(user.password, secretKey);
-
-  //   const passworDecrypted = decrypted.toString(CryptoJS.enc.Utf8);
-  //   setUser({ ...user, password: passworDecrypted });
-  // }, []);
-
-  console.log(user);
 
   return (
     <div className="user">
@@ -131,13 +116,9 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  src={user?.profliePicture}
                   alt=""
                 />
-                <label htmlFor="file">
-                  <Publish className="userUpdateIcon" />
-                </label>
-                <input type="file" id="file" style={{ display: "none" }} />
               </div>
               <button className="userUpdateButton" onClick={handleUpdateUser}>
                 Cập nhật

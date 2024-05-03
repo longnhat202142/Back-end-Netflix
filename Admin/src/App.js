@@ -14,10 +14,10 @@ import List from "./pages/list/List";
 import ListList from "./pages/listList/ListList";
 import Login from "./pages/login/Login";
 import NewList from "./pages/newList/NewList";
-import NewProduct from "./pages/newMovie/NewProduct";
+import NewMovie from "./pages/newMovie/NewMovie";
 import NewUser from "./pages/newUser/NewUser";
-import Product from "./pages/movie/Product";
-import ProductList from "./pages/movieList/ProductList";
+import Movie from "./pages/movie/Movie";
+import MovieList from "./pages/movieList/MovieList";
 import User from "./pages/user/User";
 import UserList from "./pages/userList/UserList";
 function App() {
@@ -49,13 +49,13 @@ function App() {
 
               {/* phần PHIM */}
               <Route path="/movies">
-                <ProductList />
+                <MovieList />
               </Route>
               <Route path="/movie/:id">
-                <Product />
+                <Movie />
               </Route>
               <Route path="/newmovie">
-                <NewProduct />
+                <NewMovie />
               </Route>
 
               {/* DANH SÁCH */}

@@ -1,0 +1,92 @@
+.productList{
+    flex: 4;
+}
+
+.productListItem{
+    display: flex;
+    align-items: center;
+}
+
+.productListImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+
+.productListEdit{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.productListDelete{
+    color: red;
+    cursor: pointer;
+}
+
+.container{
+    position: relative;
+}
+
+.btnDeleteMany {
+    width: 100px;
+    height: 40px;
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top:60%;
+    right: 10px;
+}
+
+.btnDeleteMany:hover {
+    background-color: #c0392b;
+}
+
+.btnDeleteMany.clicked {
+    animation: scaleDown 0.5s ease forwards;
+}
+
+@keyframes scaleDown {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.btnCreate{
+    width: 100px;
+    height: 40px;
+    background-color: #27f80bf3;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top:60%;
+    right: 150px;
+  }
+  
+  .btnCreate:hover {
+    background-color: #36b45cce;
+  }
+  
+  .btnCreate.clicked {
+    animation: scaleDown 0.5s ease forwards;
+  }
+  

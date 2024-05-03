@@ -62,19 +62,15 @@ export const createUser = async (user, dispatch) => {
 };
 
 // Cập nhật
-export const updateUser = async (user, dispatch) => {
+export const updateUser = async (id, user, dispatch) => {
   dispatch(uploadUserStart());
+  console.log(user);
   try {
-    const res = await axios.put(
-      "http://localhost:8800/api/user/" + user._id,
-      user,
-      {
-        headers: {
-          token:
-            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-        },
-      }
-    );
+    const res = await axios.put("http://localhost:8800/api/user/" + id, user, {
+      headers: {
+        token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      },
+    });
     dispatch(uploadUserSuccess(res.data));
   } catch (error) {
     dispatch(uploadUserFailure());

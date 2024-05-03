@@ -1,12 +1,19 @@
 const router = require("express").Router();
 const verify = require("../verifyToken");
 const List = require("../models/list");
+const list = require("../models/list");
 
 //Thêm danh sách
 router.post("/", verify, async (req, res) => {
   if (req.user.isAdmin) {
-    const newList = new List(req.body);
+    const newList = req.body;
     try {
+      const checkList = await list.findOne({ title: newList.title });
+      if (checkList)
+        return res.status(400).json({
+          status: "error",
+          message: "Tên tiêu đề đã tồn tại",
+        });
       const saveList = await newList.save();
       res.status(200).json(saveList);
     } catch (error) {

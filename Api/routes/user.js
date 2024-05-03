@@ -16,8 +16,8 @@ router.put("/:id", verify, async (req, res) => {
     }
 
     try {
-      const updateUser = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
+      const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
       });
 
       res.status(200).json(updateUser);
@@ -85,13 +85,17 @@ router.post("/", async (req, res) => {
     const checkEmail = await user.findOne({ email: newUser.email });
     const checkUserName = await user.findOne({ username: newUser.username });
     if (checkUserName)
-      return res
-        .status(400)
-        .json({ status: "error", message: "Tên người dùng đã tồn tại" });
+      return res.status(400).json({
+        status: "error",
+        message: "Tên người dùng đã tồn tại",
+        key: "username",
+      });
     else if (checkEmail)
-      return res
-        .status(400)
-        .json({ status: "error", message: "Email này đã tồn tại" });
+      return res.status(400).json({
+        status: "error",
+        message: "Email này đã tồn tại",
+        key: "email",
+      });
 
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);

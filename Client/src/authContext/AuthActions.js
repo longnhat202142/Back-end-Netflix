@@ -15,3 +15,17 @@ export const loginFailure = () => ({
 export const logout = () => ({
   type: "LOGOUT",
 });
+
+export const createUserFailure = () => ({
+  type: "upload_USER_FAILURE",
+});
+
+//Cập nhật phim
+export const uploadUserStart = () => ({
+  type: "UPLOAD_USER_START",
+});
+
+export const uploadUserSuccess = (user) => ({
+  type: "UPLOAD_USER_SUCCESS",
+  payload: user,
+});

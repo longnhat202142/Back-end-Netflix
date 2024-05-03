@@ -12,15 +12,18 @@ export default function List() {
   const { dispatch } = useContext(ListContext);
   const { id } = useParams();
   const [list, setList] = useState();
+
+  const [newList, setNewList] = useState(list);
   const handleChange = (e) => {
     const value = e.target.value;
 
-    setList({ ...list, [e.target.name]: value });
+    setNewList({ ...newList, [e.target.name]: value });
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    updateList(list, dispatch);
+    updateList(id, newList, dispatch);
+    alert("Cập nhật danh sách thành công");
     history.push("/lists");
   };
   useEffect(() => {

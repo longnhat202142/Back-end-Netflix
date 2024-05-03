@@ -5,7 +5,6 @@ import {
   MailOutline,
   PermIdentity,
   PhoneAndroid,
-  Publish,
 } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
 import "./user.css";
@@ -23,17 +22,20 @@ export default function User() {
   const { dispatch } = useContext(UserContext);
 
   const [user, setUser] = useState();
-
+  const [newUser, setNewUser] = useState(user);
   let phoneNumber = null;
   const handleChange = (e) => {
     const value = e.target.value;
 
-    setUser({ ...user, [e.target.name]: value });
+    setNewUser({ ...newUser, [e.target.name]: value });
   };
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
-    updateUser(user, dispatch);
+
+    updateUser(id, newUser, dispatch);
+    console.log(newUser);
+    alert("Cập nhật người dùng thành công");
     history.push("/users");
   };
 
@@ -197,13 +199,9 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  src={user?.profliePicture}
                   alt=""
                 />
-                <label htmlFor="file">
-                  <Publish className="userUpdateIcon" />
-                </label>
-                <input type="file" id="file" style={{ display: "none" }} />
               </div>
               <button className="userUpdateButton" onClick={handleUpdateUser}>
                 Cập nhật

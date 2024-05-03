@@ -58,23 +58,19 @@ export const createList = async (list, dispatch) => {
     dispatch(createListSuccess(res.data));
   } catch (error) {
     dispatch(createListFailure());
+    return error;
   }
 };
 
 // Cập nhật
-export const updateList = async (list, dispatch) => {
+export const updateList = async (id, list, dispatch) => {
   dispatch(uploadListStart());
   try {
-    const res = await axios.put(
-      "http://localhost:8800/api/list/" + list._id,
-      list,
-      {
-        headers: {
-          token:
-            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-        },
-      }
-    );
+    const res = await axios.put("http://localhost:8800/api/list/" + id, list, {
+      headers: {
+        token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      },
+    });
     dispatch(uploadListSuccess(res.data));
     // console.log(uploadListSuccess(res.data));
   } catch (error) {

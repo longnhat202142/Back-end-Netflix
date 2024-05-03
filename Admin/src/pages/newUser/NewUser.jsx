@@ -44,7 +44,8 @@ export default function NewUser() {
       alert("Thêm mới người dùng thành công!");
       history.push("/users");
     } catch (error) {
-      setError("email", error.response.data);
+      const errorRes = error.response.data;
+      setError(errorRes.key, errorRes);
     }
   };
   const handleChange = (e) => {

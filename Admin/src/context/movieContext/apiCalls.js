@@ -64,11 +64,11 @@ export const createMovies = async (movie, dispatch) => {
 };
 
 // Cập nhật
-export const updateMovies = async (movie, dispatch) => {
+export const updateMovies = async (id, movie, dispatch) => {
   dispatch(uploadMovieStart());
   try {
     const res = await axios.put(
-      "http://localhost:8800/api/movie/" + movie._id,
+      "http://localhost:8800/api/movie/" + id,
       movie,
       {
         headers: {
