@@ -12,8 +12,8 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./authContext/AuthContext";
-import User from "./pages/account/User";
-
+import User from "./pages/account/Account";
+import ChangePass from "./pages/PassChange/PassChange";
 const App = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -42,6 +42,7 @@ const App = () => {
             <Route path="/series" element={<Home type="series" />} />
             <Route path="/watch/:id" element={<Watch />} />
             <Route path="/account" element={<User />}></Route>
+            <Route path="/changepass" element={<ChangePass />}></Route>
           </>
         )}
       </Routes>

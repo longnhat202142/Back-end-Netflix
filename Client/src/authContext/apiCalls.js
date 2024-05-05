@@ -1,5 +1,5 @@
 import httpClient from "../api/httpClient";
-import { uploadUserFailure } from "../userContext/userAction";
+import { uploadUserFailure } from "../authContext/AuthActions";
 import {
   loginFailure,
   loginStart,
@@ -19,10 +19,10 @@ export const login = async (user, dispatchAu) => {
 };
 
 // Cập nhật
-export const updateUser = async (user, dispatch) => {
+export const updateUser = async (id, user, dispatch) => {
   dispatch(uploadUserStart());
   try {
-    const res = await httpClient.put("/api/user/" + user._id, user, {
+    const res = await httpClient.put("/api/user/" + id, user, {
       headers: {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
@@ -30,5 +30,22 @@ export const updateUser = async (user, dispatch) => {
     dispatch(uploadUserSuccess(res.data));
   } catch (error) {
     dispatch(uploadUserFailure());
+  }
+};
+
+// Cập nhật password
+export const changePassword = async (id, payload, dispatch) => {
+  dispatch(uploadUserStart());
+  try {
+    const res = await httpClient.post("/user/change-password/" + id, payload, {
+      headers: {
+        token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      },
+    });
+    dispatch(uploadUserSuccess(res.data.data));
+    return res.data;
+  } catch (error) {
+    dispatch(uploadUserFailure());
+    return error.response.data;
   }
 };

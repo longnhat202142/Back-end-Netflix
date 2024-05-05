@@ -22,7 +22,9 @@ export default function Login() {
             alt=""
           />
 
-          <button className="loginButton">Đăng nhập</button>
+          <Link to={"/register"}>
+            <button className="loginButton">Đăng ký</button>
+          </Link>
         </div>
       </div>
 
@@ -47,7 +49,7 @@ export default function Login() {
             Bạn mới tham gia Netflix? <Link to={"/register"}>Đăng kí ngay</Link>
             <p>
               Trang này được Google reCAPTCHA bảo vệ để đảm bảo bạn không phải
-              là robot. <a href="">Tìm hiểu thêm</a>
+              là robot. <Link>Tìm hiểu thêm</Link>
             </p>
           </div>
         </form>

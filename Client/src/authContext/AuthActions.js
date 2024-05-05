@@ -29,3 +29,7 @@ export const uploadUserSuccess = (user) => ({
   type: "UPLOAD_USER_SUCCESS",
   payload: user,
 });
+
+export const uploadUserFailure = () => ({
+  type: "UPLOAD_USER_FAILURE",
+});

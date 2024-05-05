@@ -119,4 +119,55 @@ router.post("/delete-many", verify, async (req, res) => {
   }
 });
 
+router.post("/change-password/:id", verify, async (req, res) => {
+  if (req.user.id === req.params.id || req.user.isAdmin) {
+    try {
+      const id = req.params.id;
+      const { oldPassword, newPassword, confirmPassword } = req.body;
+      if (!oldPassword || !newPassword || !confirmPassword) {
+        return res.status(400).json("Không được bỏ trống.");
+      }
+      if (newPassword !== confirmPassword) {
+        return res.status(400).json("Xác nhận mật khẩu không trùng khớp.");
+      }
+      const user = await User.findById(id);
+      if (user) {
+        // giải mã rồi so sánh mật khẩu cũ trong db và payload gửi lên
+        const decrypted = CryptoJS.AES.decrypt(
+          user.password,
+          process.env.SECRET_KEY
+        );
+        const passworDecrypted = decrypted.toString(CryptoJS.enc.Utf8);
+        if (passworDecrypted !== oldPassword) {
+          return res.status(400).json({
+            status: "ERROR",
+            message: "Mật khẩu cũ không chính xác !!!",
+          });
+        }
+
+        // mã hoá mật khẩu mới
+        const encodedNewPassword = CryptoJS.AES.encrypt(
+          newPassword,
+          process.env.SECRET_KEY
+        ).toString();
+
+        const newUser = await User.findByIdAndUpdate(
+          id,
+          { password: encodedNewPassword },
+          { new: true }
+        );
+        if (newUser) {
+          res.status(200).json({
+            status: "OK",
+            message: "Đổi mật khẩu thành công.",
+            data: newUser,
+          });
+        }
+      }
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+});
+
 module.exports = router;

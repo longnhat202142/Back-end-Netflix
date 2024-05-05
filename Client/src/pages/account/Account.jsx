@@ -7,9 +7,9 @@ import {
 
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { updateUser } from "../../userContext/apiCalls";
+import { updateUser } from "../../authContext/apiCalls";
 
-import "./user.css";
+import "./Account.css";
 import { AuthContext } from "../../authContext/AuthContext";
 export default function User() {
   const { dispatchAu } = useContext(AuthContext);
@@ -19,8 +19,8 @@ export default function User() {
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
-    const { password, ...rest } = newUser;
-    updateUser(rest, dispatchAu);
+    const { password, _id, ...rest } = newUser;
+    updateUser(_id, rest, dispatchAu);
   };
 
   const handleChange = (e) => {
@@ -39,6 +39,11 @@ export default function User() {
             </div>
           </Link>
           <h1 className="userTitle">Người dùng</h1>
+        </div>
+        <div className="userRightTitle">
+          <Link to="/changepass">
+            <div className="userChangePass">Đổi mật khẩu</div>
+          </Link>
         </div>
       </div>
       <div className="userContainer">
