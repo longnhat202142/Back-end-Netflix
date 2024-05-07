@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { AuthContext } from "./authContext/AuthContext";
 import User from "./pages/account/Account";
 import ChangePass from "./pages/PassChange/PassChange";
+import SendEmail from "./pages/SendEmail/SendEmail";
 const App = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -45,6 +46,7 @@ const App = () => {
             <Route path="/changepass" element={<ChangePass />}></Route>
           </>
         )}
+        {!user && <Route path="/send-email" element={<SendEmail />}></Route>}
       </Routes>
     </Router>
   );

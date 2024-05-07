@@ -4,7 +4,9 @@ import { NotificationsNone, Language, Settings } from "@material-ui/icons";
 import { AuthContext } from "../../context/authContext/authContext.js";
 import { useContext } from "react";
 import { logout } from "../../context/authContext/authAction.js";
+import { useState } from "react";
 export default function Topbar() {
+  const [user] = useState(JSON.parse(localStorage.getItem("user")).info || {});
   const { dispatch } = useContext(AuthContext);
   return (
     <div className="topbar">
@@ -25,7 +27,11 @@ export default function Topbar() {
             <Settings />
           </div>
           <img
-            src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+            src={
+              user.profliePicture
+                ? user.profliePicture
+                : "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+            }
             alt=""
             className="topAvatar"
           />

@@ -99,6 +99,7 @@ const UseReducer = (state, action) => {
         isFetching: false,
         error: true,
       };
+
     default:
       return { ...state };
   }

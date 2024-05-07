@@ -119,6 +119,7 @@ router.post("/delete-many", verify, async (req, res) => {
   }
 });
 
+// Thay đổi mật khẩu
 router.post("/change-password/:id", verify, async (req, res) => {
   if (req.user.id === req.params.id || req.user.isAdmin) {
     try {
@@ -164,6 +165,22 @@ router.post("/change-password/:id", verify, async (req, res) => {
           });
         }
       }
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+});
+
+// Tìm kiếm trong user
+router.get("/find-user", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const search = req.query.key;
+
+      const users = await User.find();
+      const filterUser = users.filter((user) => user.username.includes(search));
+
+      res.status(200).json(filterUser);
     } catch (error) {
       res.status(500).json(error);
     }

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import "./PassChange.scss";
-import { changePassword, updateUser } from "../../authContext/apiCalls";
+import { changePassword } from "../../authContext/apiCalls";
 import { AuthContext } from "../../authContext/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -1,4 +1,4 @@
-import { DeleteOutline } from "@material-ui/icons";
+import { DeleteOutline, Search } from "@material-ui/icons";
 import { useContext, useEffect, useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
@@ -6,17 +6,39 @@ import {
   deleteMany,
   deleteMovies,
   getMovies,
+  searchMovieApi,
 } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/movieContext";
 import "./movieList.css";
 
 export default function ProductList() {
   const { movies, dispatch } = useContext(MovieContext);
+  const [searchMovie] = useState("");
   const [ids, setIds] = useState([]);
   useEffect(() => {
     getMovies(dispatch);
   }, [dispatch]);
 
+  // Xây dựng để trách việc Call Api liên tục
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+  const handleChange = debounce((e) => {
+    const value = e.target.value;
+    // setSearchUser(value);
+    searchMovieApi(value, dispatch);
+  }, 500);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    searchMovieApi(searchMovie, dispatch);
+  };
   const handleDelete = (id) => {
     deleteMovies(id, dispatch);
   };
@@ -70,18 +92,31 @@ export default function ProductList() {
   return (
     <>
       <div className="productList">
-        <DataGrid
-          rows={movies}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[8]}
-          checkboxSelection
-          getRowId={(row) => row._id}
-          onSelectionModelChange={(ids) => {
-            setIds(ids);
-          }}
-        />
+        <div className="searchmovie">
+          <input
+            type="text"
+            placeholder="Tìm kiếm"
+            className="searchmovie_Input"
+            // spellCheck={false}
+            onChange={handleChange}
+          />
+
+          <Search className="icon" onClick={handleSearch} />
+        </div>
+        {
+          <DataGrid
+            rows={movies}
+            disableSelectionOnClick
+            columns={columns}
+            pageSize={8}
+            rowsPerPageOptions={[8]}
+            checkboxSelection
+            getRowId={(row) => row._id}
+            onSelectionModelChange={(ids) => {
+              setIds(ids);
+            }}
+          />
+        }
       </div>
       <div className="container">
         <button className="btnDeleteMany" onClick={handleDeleteMany}>

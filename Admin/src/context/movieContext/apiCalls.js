@@ -104,3 +104,22 @@ export const deleteMany = async (ids, dispatch) => {
     dispatch(deleteManyFailure());
   }
 };
+
+// Tìm kiếm movie trong Admin
+export const searchMovieApi = async (key, dispatch) => {
+  dispatch(getMoviesStart());
+  try {
+    const res = await axios.get(
+      `http://localhost:8800/api/movie/find-movie?key=${key}`,
+      {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
+    dispatch(getMoviesSuccess(res.data));
+  } catch (error) {
+    dispatch(getMoviesFailure());
+  }
+};

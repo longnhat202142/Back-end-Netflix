@@ -124,4 +124,20 @@ router.put("/:id", verify, async (req, res) => {
   }
 });
 
+// Tìm kiếm trong list trong Admin
+router.get("/find-list", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const search = req.query.key;
+
+      const lists = await List.find();
+      const filterList = lists.filter((list) => list.title.includes(search));
+
+      res.status(200).json(filterList);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+});
+
 module.exports = router;

@@ -97,3 +97,22 @@ export const deleteMany = async (ids, dispatch) => {
     dispatch(deleteManyFailure());
   }
 };
+
+// Tìm kiếm list trong Admin
+export const searchListApi = async (key, dispatch) => {
+  dispatch(getListsStart());
+  try {
+    const res = await axios.get(
+      `http://localhost:8800/api/list/find-list?key=${key}`,
+      {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
+    dispatch(getListsSuccess(res.data));
+  } catch (error) {
+    dispatch(getListsFailure());
+  }
+};

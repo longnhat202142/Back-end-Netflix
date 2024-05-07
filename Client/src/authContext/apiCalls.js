@@ -11,10 +11,11 @@ import {
 export const login = async (user, dispatchAu) => {
   dispatchAu(loginStart());
   try {
-    const res = await httpClient.post("/auth/login", user);
+    const res = await httpClient.post("/auth/login-check", user);
     dispatchAu(loginSuccess(res.data));
   } catch (err) {
     dispatchAu(loginFailure());
+    return err;
   }
 };
 
@@ -46,6 +47,16 @@ export const changePassword = async (id, payload, dispatch) => {
     return res.data;
   } catch (error) {
     dispatch(uploadUserFailure());
+    return error.response.data;
+  }
+};
+
+// Cập nhật password
+export const getPassword = async (payload) => {
+  try {
+    const res = await httpClient.post("/auth/send-email", payload);
+    if (res) return res.data;
+  } catch (error) {
     return error.response.data;
   }
 };

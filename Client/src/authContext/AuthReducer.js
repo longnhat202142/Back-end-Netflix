@@ -44,6 +44,26 @@ const AuthReducer = (state, action) => {
         isFetching: false,
         error: true,
       };
+
+    // LẤY MÂT KHẨU
+    case "GET_PASS_START":
+      return {
+        user: null,
+        isFetching: true,
+        error: false,
+      };
+    case "GET_PASS_SUCCESS":
+      return {
+        user: action.payload,
+        isFetching: false,
+        error: false,
+      };
+    case "GET_PASS_FAILURE":
+      return {
+        user: null,
+        isFetching: false,
+        error: true,
+      };
     default:
       return { ...state };
   }

@@ -1,11 +1,12 @@
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
+import { DeleteOutline, Search } from "@material-ui/icons";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   deleteList,
   deleteMany,
   getLists,
+  searchListApi,
 } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
 import "./listList.css";
@@ -13,11 +14,31 @@ import "./listList.css";
 export default function ListList() {
   const { lists, dispatch } = useContext(ListContext);
   const [ids, setIds] = useState([]);
+  const [searchList] = useState("");
 
   useEffect(() => {
     getLists(dispatch);
   }, [dispatch]);
 
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+  const handleChange = debounce((e) => {
+    const value = e.target.value;
+
+    searchListApi(value, dispatch);
+  }, 500);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    searchListApi(searchList, dispatch);
+  };
   const handleDelete = (id) => {
     deleteList(id, dispatch);
   };
@@ -58,6 +79,17 @@ export default function ListList() {
 
   return (
     <div className="productList">
+      <div className="searchmovie">
+        <input
+          type="text"
+          placeholder="Tìm kiếm"
+          className="searchmovie_Input"
+          // spellCheck={false}
+          onChange={handleChange}
+        />
+
+        <Search className="icon" onClick={handleSearch} />
+      </div>
       <DataGrid
         rows={lists}
         // disableSelectionOnClick

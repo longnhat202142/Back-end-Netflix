@@ -97,3 +97,22 @@ export const deleteMany = async (ids, dispatch) => {
     dispatch(deleteManyFailure());
   }
 };
+
+// Tìm kiếm user trong Admin
+export const searchUsersApi = async (key, dispatch) => {
+  dispatch(getUserStart());
+  try {
+    const res = await axios.get(
+      `http://localhost:8800/api/user/find-user?key=${key}`,
+      {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
+    dispatch(getUserSuccess(res.data));
+  } catch (error) {
+    dispatch(getUserFailure());
+  }
+};

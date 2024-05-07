@@ -130,4 +130,22 @@ router.post("/delete-many", verify, async (req, res) => {
   }
 });
 
+// Tìm kiếm trong Admin
+router.get("/find-movie", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const search = req.query.key;
+
+      const movies = await Movie.find();
+      const filterMovie = movies.filter((movie) =>
+        movie.title.includes(search)
+      );
+      console.log(filterMovie);
+      res.status(200).json(filterMovie);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+});
+
 module.exports = router;
