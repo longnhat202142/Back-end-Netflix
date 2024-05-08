@@ -73,7 +73,14 @@ const Navbar = () => {
 
           <span>Xin chào : {user?.username}</span>
           <NotificationsIcon className="icon" />
-          <img src={user?.profliePicture} alt="" />
+          <img
+            src={
+              user?.profliePicture
+                ? user.profliePicture
+                : "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.jpg"
+            }
+            alt=""
+          />
 
           <div className="profile">
             <ArrowDropDown className="icon" />

@@ -7,9 +7,27 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 //Mã hoá mật khẩu
 const CryptoJS = require("crypto-js");
+const user = require("../models/user");
 
 //Đăng kí
 router.post("/register", async (req, res) => {
+  const checkEmail = await user.findOne({ email: req.body.email });
+  const checkUserName = await user.findOne({ username: req.body.username });
+  console.log(checkEmail);
+  if (checkEmail) {
+    return res.status(401).json({
+      status: "ERROR",
+      message: "Email này đã được đăng kí !!!",
+      key: "email",
+    });
+  }
+  if (checkUserName) {
+    return res.status(401).json({
+      status: "ERROR",
+      message: "Tên người dùng đã được đăng kí !!!",
+      key: "username",
+    });
+  }
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -20,7 +38,7 @@ router.post("/register", async (req, res) => {
       process.env.SECRET_KEY
     ).toString(),
   });
-  console.log(newUser);
+  // console.log(newUser);
   try {
     const user = await newUser.save();
     res.status(201).json(user);

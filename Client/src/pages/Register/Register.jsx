@@ -3,6 +3,7 @@ import "./Register.scss";
 
 import httpClient from "../../api/httpClient";
 import { useNavigate } from "react-router-dom";
+
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,7 +59,9 @@ export default function Register() {
               placeholder="Địa chỉ Email"
               ref={emailRef}
               autoComplete="off"
+              name="email"
             />
+
             <button className="registerButton" onClick={handleStart}>
               Bắt đầu nào
             </button>
@@ -70,13 +73,16 @@ export default function Register() {
               placeholder="Tên người dùng"
               autoComplete="off"
               value={username}
+              name="username"
               onChange={(e) => setUsername(e.target.value)}
             />
+
             <input
               type="password"
               placeholder="Mật khẩu"
               autoComplete="off"
               value={password}
+              name="password"
               onChange={(e) => setPassword(e.target.value)}
             />
 
