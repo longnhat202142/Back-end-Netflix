@@ -28,7 +28,7 @@ export const getMoviesRandom = async (type, genre, dispatch) => {
   dispatch(getMoviesStart());
   try {
     const res = await httpClient.get(
-      `/list/${type ? "?type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
+      `/list${type ? "?type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
       {
         headers: {
           token:
@@ -36,6 +36,7 @@ export const getMoviesRandom = async (type, genre, dispatch) => {
         },
       }
     );
+    console.log(res.data);
     dispatch(getMoviesSuccess(res.data));
     return res.data;
   } catch (error) {

@@ -20,15 +20,17 @@ const Home = ({ type }) => {
   }, [type, genre]);
 
   return (
-    <div className="home">
-      <Navbar />
-      <Featured type={type} setGenre={setGenre} />
-      {isFind ? (
-        <List list={movies}></List>
-      ) : (
-        movies && movies.map((list) => <List key={list._id} list={list} />)
-      )}
-    </div>
+    <>
+      <div className="home">
+        <Navbar />
+        <Featured type={type} setGenre={setGenre} />
+        {isFind ? (
+          <List list={movies}></List>
+        ) : (
+          movies && movies.map((list) => <List key={list._id} list={list} />)
+        )}
+      </div>
+    </>
   );
 };
 
