@@ -65,28 +65,49 @@ export default function User() {
             </div>
           </div>
           <div className="userShowBottom">
-            <span className="userShowTitle">Chi tiết tài khoản</span>
+            <span className="userShowTitle" style={{ color: "black" }}>
+              Chi tiết tài khoản
+            </span>
             <div className="userShowInfo">
-              <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user?.username}</span>
+              <PermIdentity
+                className="userShowIcon"
+                style={{ color: "black" }}
+              />
+              <span className="userShowInfoTitle" style={{ color: "black" }}>
+                {user?.username}
+              </span>
             </div>
-            <span className="userShowTitle">Thông tin</span>
-            <div className="userShowInfo">
-              <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">{user?.email}</span>
+            <span className="userShowTitle" style={{ color: "black" }}>
+              Thông tin
+            </span>
+            <div className="userShowInfo" style={{ color: "black" }}>
+              <MailOutline
+                className="userShowIcon"
+                style={{ color: "black" }}
+              />
+              <span className="userShowInfoTitle" style={{ color: "black" }}>
+                {user?.email}
+              </span>
             </div>
             <div className="userShowInfo">
-              <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">Việt Nam | Huế</span>
+              <LocationSearching
+                className="userShowIcon"
+                style={{ color: "black" }}
+              />
+              <span className="userShowInfoTitle" style={{ color: "black" }}>
+                Việt Nam | Huế
+              </span>
             </div>
           </div>
         </div>
         <div className="userUpdate">
-          <span className="userUpdateTitle">Xem thông tin</span>
+          <span className="userUpdateTitle" style={{ color: "black" }}>
+            Xem thông tin
+          </span>
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
-                <label>Tên người dùng</label>
+                <label style={{ color: "black" }}>Tên người dùng</label>
                 <input
                   type="text"
                   placeholder={user?.username}
@@ -97,7 +118,7 @@ export default function User() {
               </div>
 
               <div className="userUpdateItem">
-                <label>Email</label>
+                <label style={{ color: "black" }}>Email</label>
                 <input
                   type="text"
                   placeholder={user?.email}
@@ -108,7 +129,7 @@ export default function User() {
               </div>
 
               <div className="userUpdateItem">
-                <label>Address</label>
+                <label style={{ color: "black" }}>Địa chỉ</label>
                 <input
                   type="text"
                   placeholder="Việt Nam | Huế"

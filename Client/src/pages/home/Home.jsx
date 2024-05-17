@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { getMoviesRandom } from "../../movieContext/apiCalls";
 import { MovieContext } from "../../movieContext/movieContext";
 import "./Home.scss";
+import Footer from "../../components/footer/Footer";
 
 const Home = ({ type }) => {
   // const [lists, setLists] = useState([]);
@@ -30,6 +31,7 @@ const Home = ({ type }) => {
           movies && movies.map((list) => <List key={list._id} list={list} />)
         )}
       </div>
+      <Footer />
     </>
   );
 };

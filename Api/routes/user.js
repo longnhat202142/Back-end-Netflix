@@ -61,8 +61,8 @@ router.get("/", verify, async (req, res) => {
   if (req.user.isAdmin) {
     try {
       const users = query
-        ? await User.find(req.params.id).limit(5)
-        : await User.find();
+        ? await User.find(req.params.id).sort({ _id: -1 }).limit(5)
+        : await User.find().sort({ _id: -1 });
       // const newUsers = users.map((user) => {
       //   return {
       //     ...user,

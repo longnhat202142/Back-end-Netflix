@@ -1,111 +1,143 @@
 @import "../../app.scss";
 
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
+
 .navbar {
-    width: 100%;
-    color: white;
-    font-size: 14px;
-    position: fixed;
-    top: 0;
-    background: linear-gradient(to top, transparent 0%, rgb(0,00,0,0.3) 50%);
-   
-    z-index: 999;
-   
-    &.scroll {
+  width: 100%;
+  color: white;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+  z-index: 999;
+
+  &.scroll {
+    background-color: var(--main-color);
+  }
+
+  .container {
+    min-width: 1200px;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+
+    .left {
+      display: flex;
+      align-items: center;
+
+      img {
+        height: 50px;
+        padding: 0;
         background-color: var(--main-color);
+        @include mobile {
+          display: none;
+        }
+      }
+
+      span {
+        margin-right: 20px;
+        cursor: pointer;
+
+        @include tablet {
+          display: none;
+        }
+
+        &.navarLinks {
+          @include tablet {
+            display: block;
+          }
+        }
+      }
     }
 
-    .container{
-        min-width: 1200px;
-        padding: 0 50px;
+    .right {
+      display: flex;
+      align-items: center;
+
+      .searchmovie {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-        .left {
-            display: flex;
-           
-            align-items: center;
-            img {
-                height: 50px;
-                padding: 0;
-                background-color: var(--main-color);
-                @include mobile{
-                    display: none;
-                }
-            
-            }
-            span{
-                margin-right: 20px;
-                cursor: pointer;
 
-                @include tablet{
-                    display: none;
-                }
-                &.navarLinks{
-                    @include tablet{
-                        display: block;
-                    }
-                }
-            }
+        .searchmovie_Input {
+          height: 30px;
+          border-radius: 5px;
+          padding: 0 10px;
+          background-color: transparent;
+          color: white;
         }
-        
+      }
 
-        .right{
-            display: flex;
-            align-items: center;
+      .icon {
+        margin: 0 15px;
+        cursor: pointer;
+      }
 
-            .searchmovie{
-                display: flex;
-                
-               
-                .searchmovie_Input{
-                    height: 30px;
-                    border-radius:5px;
-                    padding: 0 10px;
-                    background-color: transparent;
-                    color: white;
-                }
-              
-            }
-            .icon {
-                margin: 0 15px;
-                cursor: pointer;
-            }
-           
-            img{
-                height: 30px;
-                width: 30px;
-                border-radius: 5px;
-                object-fit: cover;
-                cursor: pointer;
-            }
+      img {
+        height: 30px;
+        width: 30px;
+        border-radius: 5px;
+        object-fit: cover;
+        cursor: pointer;
+      }
 
-            .profile{
-                .options{
-                    display: none;
-                    background-color: var(--main-color);
-                    border-radius: 5px;
-                    
-                }
-                span{
-                    padding: 10px;
-                    cursor: pointer;
-                }
-
-                &:hover {
-                    .options{
-                        display: flex;
-                        flex-direction: column;
-                        position: absolute;
-                      
-                    }
-                }
-            }
-
+      .profile {
+        .options {
+          display: none;
+          background-color: var(--main-color);
+          border-radius: 5px;
         }
+
+        span {
+          padding: 10px;
+          cursor: pointer;
+        }
+
+        &:hover {
+          .options {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+          }
+        }
+      }
+
+      .hamburger {
+        display: none;
+        cursor: pointer;
+
+        @include mobile {
+          display: block;
+        }
+      }
     }
-}
+  }
 
+  .menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--main-color);
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    padding: 10px 0;
+
+    @include mobile {
+      display: flex;
+    }
+
+    .link {
+      color: white;
+      text-decoration: none;
+      padding: 10px 0;
+    }
+
+    span {
+      padding: 10px 0;
+      cursor: pointer;
+    }
+  }
+}

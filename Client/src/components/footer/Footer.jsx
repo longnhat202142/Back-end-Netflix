@@ -1,59 +1,69 @@
 import React from "react";
 import "./Footer.css";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <>
-      {" "}
+    <div className="footer">
+      <section className="contact-area" id="contact">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 offset-lg-3">
+              <div className="contact-content text-center">
+                <Link href="#" className="text-center-img">
+                  <img
+                    src="https://cdn.tgdd.vn/Files/2016/01/09/769224/netflix-la-gi-7-665x320.jpg"
+                    alt="logo"
+                  />
+                </Link>
+                <p>Xây dựng trang Website xem phim trực tuyến của Long Nhật </p>
+                <div className="hr"></div>
+                <h6> Email : longnhat03082002@gmail.com</h6>
+                <h6>SDT : 0329143975</h6>
+                <div className="contact-social">
+                  <ul>
+                    <li>
+                      <Link className="hover-target" href="#">
+                        <FacebookOutlinedIcon className="hover-target" />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="hover-target"
+                        href="https://github.com/longnhat202142/Back-end-Netflix"
+                      >
+                        <GitHubIcon />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="hover-target"
+                        href="https://mail.google.com/mail/u/0/#inbox"
+                      >
+                        <SendOutlinedIcon />
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer>
-        <div class="container">
-          <div class="footer-content">
-            <h3>Liên hệ</h3>
-            <p>Tên : Nhật</p>
-            <p>SDT : 0329143975</p>
-            <p>Địa chỉ : Huế</p>
-          </div>
-          <div class="footer-content">
-            <h3>Thông tin thêm</h3>
-            <ul class="list">
-              <li>
-                <a href="#">Trang chủ</a>
-              </li>
-              <li>
-                <a href="#">About</a>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-content">
-            <h3>Theo dõi</h3>
-            <ul class="social-icons">
-              <li>
-                <a href="">
-                  <i class="fab fa-facebook"></i>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <i class="fab fa-twitter"></i>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <i class="fab fa-instagram"></i>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <i class="fab fa-linkedin"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="bottom-bar">
-          <p>&copy; 2023 your company . All rights reserved</p>
-        </div>
+        <p>
+          Copyright &copy; 2024{" "}
+          <img
+            src="https://images.ctfassets.net/y2ske730sjqp/1aONibCke6niZhgPxuiilC/2c401b05a07288746ddf3bd3943fbc76/BrandAssets_Logos_01-Wordmark.jpg?w=940"
+            alt="logo"
+          />{" "}
+          All Rights Reserved.
+        </p>
       </footer>
-    </>
+    </div>
   );
 };
 

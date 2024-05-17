@@ -1,6 +1,7 @@
 .user {
   flex: 4;
   padding: 20px;
+  background-color: rgb(179, 226, 245);
 }
 
 .userTitleContainer {

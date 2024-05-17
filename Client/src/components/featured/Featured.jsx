@@ -78,8 +78,13 @@ export default function Featured({ type, setGenre }) {
         <span className="desc">{content.desc}</span>
         <div className="buttons">
           <Link to={{ pathname: "/watch/" + content._id }} className="play">
-            <PlayArrow />
-            <span>Xem</span>
+            <PlayArrow
+              style={{
+                background: " rgb(0 0 0 / 53%)",
+                marginRight: "5px",
+              }}
+            />
+            <span style={{ color: "black" }}>Xem</span>
           </Link>
           <button className="more">
             <InfoOutlined />

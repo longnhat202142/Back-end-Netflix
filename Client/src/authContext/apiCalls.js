@@ -23,7 +23,7 @@ export const login = async (user, dispatchAu) => {
 export const updateUser = async (id, user, dispatch) => {
   dispatch(uploadUserStart());
   try {
-    const res = await httpClient.put("/api/user/" + id, user, {
+    const res = await httpClient.put("/user/" + id, user, {
       headers: {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },

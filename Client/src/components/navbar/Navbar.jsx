@@ -8,6 +8,7 @@ import { MovieContext } from "../../movieContext/movieContext";
 
 import "./Navbar.scss";
 import { getMoviesRandom, searchMoviesApi } from "../../movieContext/apiCalls";
+import { Menu } from "@mui/material";
 // import { findMoviesSuccess } from "../../movieContext/movieAction";
 
 const Navbar = () => {
@@ -18,6 +19,7 @@ const Navbar = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")).info || {});
   // Kiểm tra xem có thanh chuột không
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -36,6 +38,9 @@ const Navbar = () => {
     if (searchMovie) searchMoviesApi(searchMovie, dispatch);
     else getMoviesRandom(null, null, dispatch);
   };
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
+  };
 
   return (
     <div className={isScrolled ? "navbar scroll" : "navbar"}>
@@ -50,7 +55,6 @@ const Navbar = () => {
           <Link to="/" className="link">
             <span>Trang chủ</span>
           </Link>
-
           <Link to="/movies" className="link">
             <span className="navarLinks">Phim</span>
           </Link>
@@ -67,10 +71,8 @@ const Navbar = () => {
               spellCheck={false}
               onChange={handleChange}
             />
-
             <Search className="icon" onClick={handleSearch} />
           </div>
-
           <span>Xin chào : {user?.username}</span>
           <NotificationsIcon className="icon" />
           <img
@@ -81,12 +83,10 @@ const Navbar = () => {
             }
             alt=""
           />
-
           <div className="profile">
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>
-                {" "}
                 <Link
                   style={{ color: "white", textDecoration: "none" }}
                   to={"/account"}
@@ -97,8 +97,27 @@ const Navbar = () => {
               <span onClick={() => dispatchAu(logout())}>Đăng xuất</span>
             </div>
           </div>
+          <Menu className="hamburger" onClick={toggleMenu} />{" "}
+          {/* Hamburger icon */}
         </div>
       </div>
+      {isMenuOpen && (
+        <div className="menu">
+          <Link to="/movies" className="link">
+            <span className="navarLinks">Phim</span>
+          </Link>
+          <Link to="/series" className="link">
+            <span className="navarLinks">Series</span>
+          </Link>
+          <Link
+            style={{ color: "white", textDecoration: "none" }}
+            to={"/account"}
+          >
+            <span>Cài đặt</span>
+          </Link>
+          <span onClick={() => dispatchAu(logout())}>Đăng xuất</span>
+        </div>
+      )}
     </div>
   );
 };
