@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { createList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
-import { getMovies } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/movieContext";
 import "./newList.css";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 const schema = yup.object().shape({
   title: yup.string().required("Không được bỏ trống"),
@@ -18,9 +17,8 @@ export default function NewList() {
   const [options, setOptions] = useState([]);
   const { dispatch } = useContext(ListContext);
   const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
-  // const history = useHistory();
+
   useEffect(() => {
-    getMovies(dispatchMovie);
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:8800/api/movie", {
@@ -39,9 +37,8 @@ export default function NewList() {
         console.log(error);
       }
     };
-
     fetchData();
-  }, [dispatchMovie]);
+  }, []);
 
   const handleChange = (e) => {
     const value = e.target.value;

@@ -6,9 +6,9 @@ import { logout } from "../../authContext/AuthActions";
 import { AuthContext } from "../../authContext/AuthContext";
 import { MovieContext } from "../../movieContext/movieContext";
 
-import "./Navbar.scss";
+import MenuIcon from "@mui/icons-material/Menu";
 import { getMoviesRandom, searchMoviesApi } from "../../movieContext/apiCalls";
-import { Menu } from "@mui/material";
+import "./Navbar.scss";
 // import { findMoviesSuccess } from "../../movieContext/movieAction";
 
 const Navbar = () => {
@@ -37,9 +37,10 @@ const Navbar = () => {
     e.preventDefault();
     if (searchMovie) searchMoviesApi(searchMovie, dispatch);
     else getMoviesRandom(null, null, dispatch);
+    setIsMenuOpen(false);
   };
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
+    setIsMenuOpen((prev) => !prev); // Toggle menu visibility
   };
 
   return (
@@ -52,7 +53,7 @@ const Navbar = () => {
               alt=""
             />
           </Link>
-          <Link to="/" className="link">
+          <Link to="/" className="link" onClick={() => setSearchMovie("")}>
             <span>Trang chủ</span>
           </Link>
           <Link to="/movies" className="link">
@@ -97,11 +98,12 @@ const Navbar = () => {
               <span onClick={() => dispatchAu(logout())}>Đăng xuất</span>
             </div>
           </div>
-          <Menu className="hamburger" onClick={toggleMenu} />{" "}
+          {/* <Menu className="hamburger" onClick={toggleMenu} />{" "} */}
           {/* Hamburger icon */}
         </div>
+        <MenuIcon className="menubar-icon" onClick={toggleMenu} />
       </div>
-      {isMenuOpen && (
+      {/* {isMenuOpen && (
         <div className="menu">
           <Link to="/movies" className="link">
             <span className="navarLinks">Phim</span>
@@ -116,6 +118,41 @@ const Navbar = () => {
             <span>Cài đặt</span>
           </Link>
           <span onClick={() => dispatchAu(logout())}>Đăng xuất</span>
+        </div>
+      )} */}
+
+      {isMenuOpen && (
+        <div className="menu">
+          <ul>
+            <li>
+              <span style={{ textAlign: "center", display: "block" }}>
+                Xin chào : {user?.username}
+              </span>
+            </li>
+            <li>
+              <div className="searchmovie">
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm phim"
+                  className="searchmovie_Input"
+                  spellCheck={false}
+                  onChange={handleChange}
+                />
+                <Search className="icon" onClick={handleSearch} />
+              </div>
+            </li>
+            <li>
+              <Link to={"/account"}>Cài đặt</Link>
+            </li>
+            <li>
+              <span
+                style={{ display: "block" }}
+                onClick={() => dispatchAu(logout())}
+              >
+                Đăng xuất
+              </span>
+            </li>
+          </ul>
         </div>
       )}
     </div>

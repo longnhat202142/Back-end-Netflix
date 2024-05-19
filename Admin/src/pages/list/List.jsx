@@ -1,17 +1,20 @@
+import { ArrowBackOutlined } from "@material-ui/icons";
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
+import { MovieContext } from "../../context/movieContext/movieContext";
 import "./list.css";
-import { ArrowBackOutlined } from "@material-ui/icons";
-import axios from "axios";
 
 export default function List() {
   const history = useHistory();
   const { dispatch } = useContext(ListContext);
   const { id } = useParams();
   const [list, setList] = useState();
+  const [listMovies, setListMovies] = useState(null);
+  const [movies, setMovies] = useState([]);
 
   const [newList, setNewList] = useState(list);
   const handleChange = (e) => {
@@ -26,23 +29,44 @@ export default function List() {
     alert("Cập nhật danh sách thành công");
     history.push("/lists");
   };
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("http://localhost:8800/api/list/find/" + id, {
-        headers: {
-          token:
-            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-        },
-      });
-      if (res.status === 200) {
-        const data = res.data;
-        setList({ ...data });
+      const [resList, resMovies] = await Promise.all([
+        axios.get("http://localhost:8800/api/list/find/" + id, {
+          headers: {
+            token:
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+          },
+        }),
+        axios.get("http://localhost:8800/api/movie", {
+          headers: {
+            token:
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+          },
+        }),
+      ]);
+      if (resList.status === 200) {
+        const data = resList.data;
+        setList(data);
+      }
+      if (resMovies.status === 200) {
+        setMovies(resMovies.data);
       }
     };
     fetchData();
 
     // eslint-disable-next-line
   }, []);
+
+  const handleSelect = (e) => {
+    let value = Array.from(e.target.selectedOptions, (option) => option.value);
+    const newSelectMovies = { ...listMovies, [e.target.name]: value };
+    setNewList({
+      ...newList,
+      content: list.content.concat(newSelectMovies.content),
+    });
+  };
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -110,6 +134,26 @@ export default function List() {
               onChange={handleChange}
               name="type"
             /> */}
+
+            <label>Nội dung</label>
+            <select
+              multiple
+              name="content"
+              onChange={handleSelect}
+              style={{ height: "250px" }}
+            >
+              {movies.length > 0 &&
+                list.content.length > 0 &&
+                movies.map((movie) => (
+                  <option
+                    key={movie._id}
+                    value={movie._id}
+                    className={list.content.includes(movie._id) ? "active" : ""}
+                  >
+                    {movie.title}
+                  </option>
+                ))}
+            </select>
             <button className="productButton" onClick={handleUpdate}>
               Cập nhật
             </button>

@@ -1,7 +1,7 @@
 import "./home.css";
 
-import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
+import WidgetSm from "../../components/widgetSm/WidgetSm";
 
 export default function Home() {
   return (

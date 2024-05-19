@@ -7,9 +7,9 @@ import "./List.scss";
 
 export default function List({ list }) {
   return (
-    <div className="list">
+    <div className={`list ${!list.content ? "has-search" : ""}`}>
       <span className="listTitle">{list.title ?? "Danh sách tìm kiếm"}</span>
-      <div className={`wrapper ${!list.content ? "has-search" : ""}`}>
+      <div className="wrapper">
         {list.content && (
           <Swiper
             slidesPerView={1}
@@ -44,10 +44,15 @@ export default function List({ list }) {
 
         {/* render list search */}
         {!list.content &&
+          list.length > 0 &&
           list.map((item, i) => {
             return <ListItem index={i} item={item._id} />;
           })}
       </div>
+
+      {!list.content && list.length === 0 && (
+        <span>Không có kết quả tìm kiếm phù hợp với tìm kiếm của bạn!.</span>
+      )}
     </div>
   );
 }

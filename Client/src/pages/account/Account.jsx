@@ -9,17 +9,23 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { updateUser } from "../../authContext/apiCalls";
 
-import "./Account.css";
 import { AuthContext } from "../../authContext/AuthContext";
+import storage from "../../firebase";
+import "./Account.css";
 export default function User() {
   const { dispatchAu } = useContext(AuthContext);
 
   const [user] = useState(JSON.parse(localStorage.getItem("user")).info || {});
   const [newUser, setNewUser] = useState(user);
+  const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
     const { password, _id, ...rest } = newUser;
+    if (imageUrl) {
+      rest.profliePicture = imageUrl;
+    }
     updateUser(_id, rest, dispatchAu);
   };
 
@@ -27,6 +33,36 @@ export default function User() {
     const value = e.target.value;
 
     setNewUser({ ...newUser, [e.target.name]: value });
+  };
+
+  const handleChangeImage = (e) => {
+    console.log(e.target.files[0]);
+    setImage(e.target.files[0]);
+  };
+
+  const handleUpdateAvatar = async (e) => {
+    e.preventDefault();
+    if (image) {
+      const fileName = Date.now() + image.name;
+      const uploadTask = storage.ref(`/items/${fileName}`).put(image);
+      uploadTask.on(
+        "state_change",
+        (snaphot) => {
+          const progress =
+            (snaphot.bytesTransferred / snaphot.totalBytes) * 100;
+          console.log("Upload " + progress + "  % doen");
+        },
+        (err) => {
+          console.log(err);
+        },
+        async () => {
+          const imageUrl = await uploadTask.snapshot.ref.getDownloadURL();
+          if (imageUrl) {
+            setImageUrl(imageUrl);
+          }
+        }
+      );
+    }
   };
 
   return (
@@ -142,9 +178,28 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src={user?.profliePicture}
+                  src={imageUrl || user?.profliePicture}
                   alt=""
                 />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChangeImage}
+                    accept="image/png, image/jpeg"
+                  />
+                  <button
+                    className="userUpdateButton"
+                    onClick={handleUpdateAvatar}
+                  >
+                    Upload
+                  </button>
+                </div>
               </div>
               <button className="userUpdateButton" onClick={handleUpdateUser}>
                 Cập nhật

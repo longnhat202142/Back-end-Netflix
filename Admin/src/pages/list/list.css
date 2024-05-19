@@ -149,3 +149,7 @@
 .productTitle{
   font-size: 30px;
 }
+
+option.active {
+  background-color: aquamarine;
+}

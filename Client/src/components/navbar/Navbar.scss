@@ -18,7 +18,8 @@
   }
 
   .container {
-    min-width: 1200px;
+    width: 100%;
+    // min-width: 1200px;
     padding: 0 50px;
     display: flex;
     justify-content: space-between;
@@ -113,31 +114,96 @@
         }
       }
     }
+
+    .menubar-icon {
+      display: none;
+      padding: 4px;
+      font-size: 40px;
+      cursor: pointer;
+    }
   }
 
+
+
   .menu {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--main-color);
-    position: absolute;
-    top: 70px;
-    width: 100%;
-    padding: 10px 0;
+    width: 300px;
+    background-color: white;
+    position: fixed;
+    height: 100vh;
+    right: 0;
+    z-index: 100;
+    color: black;
+    animation: floatRight 0.5s linear;
+    font-size: 18px;
 
-    @include mobile {
-      display: flex;
+
+    ul li {
+      padding: 15px 10px;
+      border-bottom: 1px solid #ccc;
     }
 
-    .link {
-      color: white;
+    a {
+      display: block;
       text-decoration: none;
-      padding: 10px 0;
+      color: inherit
     }
 
-    span {
-      padding: 10px 0;
-      cursor: pointer;
+    .searchmovie {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+
+      input {
+        flex: 1;
+        height: 40px;
+      }
+    }
+    // display: none;
+    // flex-direction: column;
+    // align-items: center;
+    // background-color: var(--main-color);
+    // position: absolute;
+    // top: 70px;
+    // width: 100%;
+    // padding: 10px 0;
+
+    // @include mobile {
+    //   display: flex;
+    // }
+
+    // .link {
+    //   color: white;
+    //   text-decoration: none;
+    //   padding: 10px 0;
+    // }
+
+    // span {
+    //   padding: 10px 0;
+    //   cursor: pointer;
+    // }
+  }
+}
+
+@keyframes floatRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform:translateX(0);
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .navbar {
+    .container {
+      .right {
+        display: none;
+      }
+
+      .menubar-icon {
+        display: block;  
+      }
     }
   }
 }
