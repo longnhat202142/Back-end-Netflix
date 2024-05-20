@@ -16,6 +16,7 @@ export default function NewList() {
   const [list, setList] = useState(null);
   const [options, setOptions] = useState([]);
   const { dispatch } = useContext(ListContext);
+  // eslint-disable-next-line
   const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
 
   useEffect(() => {

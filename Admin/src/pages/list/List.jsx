@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { updateList } from "../../context/listContext/apiCalls";
 import { ListContext } from "../../context/listContext/listContext";
-import { MovieContext } from "../../context/movieContext/movieContext";
+
 import "./list.css";
 
 export default function List() {
@@ -13,9 +13,10 @@ export default function List() {
   const { dispatch } = useContext(ListContext);
   const { id } = useParams();
   const [list, setList] = useState();
+  // eslint-disable-next-line
   const [listMovies, setListMovies] = useState(null);
   const [movies, setMovies] = useState([]);
-
+  const [options, setOptions] = useState([]);
   const [newList, setNewList] = useState(list);
   const handleChange = (e) => {
     const value = e.target.value;
@@ -52,6 +53,10 @@ export default function List() {
       }
       if (resMovies.status === 200) {
         setMovies(resMovies.data);
+        const movies = resMovies.data;
+        const genres = movies.map((movie) => movie.genre);
+        const options = [...new Set(genres)];
+        setOptions(options);
       }
     };
     fetchData();
@@ -116,12 +121,20 @@ export default function List() {
               name="title"
             />
             <label>Thể loại</label>
-            <input
+            {/* <input
               type="text"
               placeholder={list?.genre}
               onChange={handleChange}
               name="genre"
-            />
+            /> */}
+            <select name="genre" id="genre" onChange={handleChange}>
+              {options &&
+                options.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+            </select>
             <label>Kiểu</label>
             <select name="type" onChange={handleChange}>
               <option value="">--- Thể loại ---</option>
