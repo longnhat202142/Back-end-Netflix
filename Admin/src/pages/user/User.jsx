@@ -14,6 +14,7 @@ import { updateUser } from "../../context/userContext/apiCalls";
 import CryptoJS from "crypto-js";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
+import storage from "../../firebase";
 
 export default function User() {
   const { id } = useParams();
@@ -23,6 +24,9 @@ export default function User() {
 
   const [user, setUser] = useState();
   const [newUser, setNewUser] = useState(user);
+  const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState("");
+
   let phoneNumber = null;
   const handleChange = (e) => {
     const value = e.target.value;
@@ -33,8 +37,14 @@ export default function User() {
   const handleUpdateUser = (e) => {
     e.preventDefault();
 
-    updateUser(id, newUser, dispatch);
     console.log(newUser);
+
+    const { ...rest } = newUser;
+    if (imageUrl) {
+      rest.profliePicture = imageUrl;
+    }
+    updateUser(id, rest, dispatch);
+
     alert("Cập nhật người dùng thành công");
     history.push("/users");
   };
@@ -54,6 +64,7 @@ export default function User() {
         const decrypted = CryptoJS.AES.decrypt(data.password, secretKey);
 
         const passworDecrypted = decrypted.toString(CryptoJS.enc.Utf8);
+
         setUser({ ...data, password: passworDecrypted });
       }
     };
@@ -62,6 +73,39 @@ export default function User() {
     // eslint-disable-next-line
   }, []);
 
+  //Thay đổi hình ảnh
+  const handleChangeImage = (e) => {
+    // console.log(e.target.files[0]);
+    setImage(e.target.files[0]);
+  };
+
+  // Upload lên firebase
+  const handleUpdateAvatar = async (e) => {
+    e.preventDefault();
+    if (image) {
+      const fileName = Date.now() + image.name;
+      const uploadTask = storage.ref(`/items/${fileName}`).put(image);
+      uploadTask.on(
+        "state_change",
+        (snaphot) => {
+          const progress =
+            (snaphot.bytesTransferred / snaphot.totalBytes) * 100;
+          console.log("Upload " + progress + "  % doen");
+        },
+        (err) => {
+          console.log(err);
+        },
+        async () => {
+          const imageUrl = await uploadTask.snapshot.ref.getDownloadURL();
+          if (imageUrl) {
+            setImageUrl(imageUrl);
+          }
+        }
+      );
+    }
+  };
+
+  // Tạo SDT ngẫu nhiên
   function RandomPhoneNumber() {
     const generateRandomNumber = (length) => {
       return Math.floor(Math.random() * Math.pow(10, length));
@@ -199,9 +243,28 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src={user?.profliePicture}
+                  src={imageUrl || user?.profliePicture}
                   alt=""
                 />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChangeImage}
+                    accept="image/png, image/jpeg"
+                  />
+                  <button
+                    className="userUpdateButton"
+                    onClick={handleUpdateAvatar}
+                  >
+                    Upload
+                  </button>
+                </div>
               </div>
               <button className="userUpdateButton" onClick={handleUpdateUser}>
                 Cập nhật
