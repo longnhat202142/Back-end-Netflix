@@ -17,25 +17,23 @@ const Home = ({ type }) => {
       await getMoviesRandom(type, genre, dispatch);
     };
     getRandomLists();
-    // eslint-disable-next-line
-
-    return () => {
-      setGenre("");
-    };
   }, [type, genre]);
 
   return (
     <>
       <div className="home">
-        <Navbar />
+        <Navbar setGenre={setGenre} />
 
         {isFind ? (
           <List list={movies}></List>
         ) : (
           <>
             <Featured type={type} setGenre={setGenre} />
-            {movies &&
+            {movies.length > 0 &&
               movies.map((list) => <List key={list._id} list={list} />)}
+            {movies.length === 0 && (
+              <h2 style={{ textAlign: "center" }}>Không có kết quả!</h2>
+            )}
           </>
         )}
       </div>

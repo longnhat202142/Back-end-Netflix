@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -13,11 +13,12 @@ const schema = yup.object().shape({
   title: yup.string().required("Không được bỏ trống"),
 });
 export default function NewList() {
+  const history = useHistory();
   const [list, setList] = useState(null);
   const [options, setOptions] = useState([]);
   const { dispatch } = useContext(ListContext);
+  const [movieTitles, setMovieTiles] = useState([]);
   // eslint-disable-next-line
-  const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +33,14 @@ export default function NewList() {
           const movies = res.data;
           const genres = movies.map((movie) => movie.genre);
           const options = [...new Set(genres)];
+          const movieTitles = movies.map((movie) => {
+            const { _id, title } = movie;
+            return {
+              id: _id,
+              title,
+            };
+          });
+          setMovieTiles(movieTitles);
           setOptions(options);
         }
       } catch (error) {
@@ -66,8 +75,8 @@ export default function NewList() {
       const erroMsg = error?.response?.data;
       setError("title", erroMsg);
     }
-    // alert("Thêm thành công phim mới !");
-    // history.push("/lists");
+    alert("Thêm thành công phim mới !");
+    history.push("/lists");
   };
 
   const handleSelect = (e) => {
@@ -96,7 +105,7 @@ export default function NewList() {
             name="genre"
             onChange={handleChange}
           /> */}
-          <select name="genre" id="genre">
+          <select name="genre" id="genre" onChange={handleChange}>
             {options &&
               options.map((option) => (
                 <option key={option} value={option}>
@@ -119,9 +128,9 @@ export default function NewList() {
             onChange={handleSelect}
             style={{ height: "250px" }}
           >
-            {movies.map((movie, index) => (
-              <option key={index} value={movie._id}>
-                {movie.title}
+            {movieTitles.map((title) => (
+              <option key={title.id} value={title.id}>
+                {title.title}
               </option>
             ))}
           </select>

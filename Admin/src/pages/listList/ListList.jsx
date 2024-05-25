@@ -40,7 +40,8 @@ export default function ListList() {
     searchListApi(searchList, dispatch);
   };
   const handleDelete = (id) => {
-    deleteList(id, dispatch);
+    const result = window.confirm("Bạn có muốn xoá list này không ?");
+    if (result) deleteList(id, dispatch);
   };
 
   const columns = [

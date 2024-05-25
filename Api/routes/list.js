@@ -14,9 +14,10 @@ router.post("/", verify, async (req, res) => {
           status: "error",
           message: "Tên tiêu đề đã tồn tại",
         });
-      const saveList = await newList.save();
+      const saveList = await list.create(newList);
       res.status(200).json(saveList);
     } catch (error) {
+      console.log(error);
       res.status(500).json(error);
     }
   } else {

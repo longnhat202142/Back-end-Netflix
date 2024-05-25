@@ -127,7 +127,12 @@ export default function List() {
               onChange={handleChange}
               name="genre"
             /> */}
-            <select name="genre" id="genre" onChange={handleChange}>
+            <select
+              name="genre"
+              id="genre"
+              onChange={handleChange}
+              value={list?.genre}
+            >
               {options &&
                 options.map((option) => (
                   <option key={option} value={option}>
@@ -136,7 +141,7 @@ export default function List() {
                 ))}
             </select>
             <label>Kiểu</label>
-            <select name="type" onChange={handleChange}>
+            <select name="type" onChange={handleChange} value={list?.type}>
               <option value="">--- Thể loại ---</option>
               <option value="movies">Phim</option>
               <option value="series">Series</option>

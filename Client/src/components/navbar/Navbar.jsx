@@ -11,7 +11,7 @@ import { getMoviesRandom, searchMoviesApi } from "../../movieContext/apiCalls";
 import "./Navbar.scss";
 // import { findMoviesSuccess } from "../../movieContext/movieAction";
 
-const Navbar = () => {
+const Navbar = ({ setGenre }) => {
   const { dispatchAu } = useContext(AuthContext);
   const { dispatch } = useContext(MovieContext);
   const [searchMovie, setSearchMovie] = useState("");
@@ -53,7 +53,14 @@ const Navbar = () => {
               alt=""
             />
           </Link>
-          <Link to="/" className="link" onClick={() => setSearchMovie("")}>
+          <Link
+            to="/"
+            className="link"
+            onClick={() => {
+              setSearchMovie("");
+              setGenre("");
+            }}
+          >
             <span>Trang chủ</span>
           </Link>
           <Link to="/movies" className="link">
